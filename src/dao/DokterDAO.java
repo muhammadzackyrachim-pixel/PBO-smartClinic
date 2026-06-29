@@ -1,155 +1,95 @@
 package dao;
 
-import database.DBConnection;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import model.Dokter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.sql.*;
+import database.DBConnection;
+import model.Dokter;
 
 public class DokterDAO {
 
-    Connection conn = DBConnection.connect();
-
-    // LOAD
-    public ObservableList<Dokter> getAllDokter(){
-
-        ObservableList<Dokter> list =
-                FXCollections.observableArrayList();
-
-        try{
-
-            Statement st =
-                    conn.createStatement();
-
-            ResultSet rs =
-                    st.executeQuery(
-                            "SELECT * FROM dokter");
-
-            while(rs.next()){
-
-                list.add(
-                        new Dokter(
-                                rs.getInt("id_dokter"),
-                                rs.getString("nama"),
-                                rs.getString("spesialis"),
-                                rs.getString("no_hp")
-                        )
-                );
+    public List<Dokter> getAll() {
+        List<Dokter> list = new ArrayList<>();
+        String sql = "SELECT * FROM dokter ORDER BY id ASC";
+        try (Connection conn = DBConnection.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                list.add(new Dokter(
+                    rs.getInt("id"),
+                    rs.getString("nama"),
+                    rs.getString("spesialisasi"),
+                    rs.getString("no_hp"),
+                    rs.getString("alamat"),
+                    rs.getString("email")
+                ));
             }
-
-        }catch(Exception e){
-
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         return list;
     }
 
-    // INSERT
-    public void insertDokter(Dokter d){
-
-        try{
-
-            String sql =
-                    "INSERT INTO dokter(nama,spesialis,no_hp) VALUES(?,?,?)";
-
-            PreparedStatement ps =
-                    conn.prepareStatement(sql);
-
+    public boolean insert(Dokter d) {
+        String sql = "INSERT INTO dokter (nama, spesialisasi, no_hp, alamat, email) VALUES (?,?,?,?,?)";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, d.getNama());
-            ps.setString(2, d.getSpesialis());
+            ps.setString(2, d.getSpesialisasi());
             ps.setString(3, d.getNoHP());
-
-            ps.executeUpdate();
-
-        }catch(Exception e){
-
+            ps.setString(4, d.getAlamat());
+            ps.setString(5, d.getEmail());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    // UPDATE
-    public void updateDokter(Dokter d){
-
-        try{
-
-            String sql =
-                    "UPDATE dokter SET nama=?,spesialis=?,no_hp=? WHERE id_dokter=?";
-
-            PreparedStatement ps =
-                    conn.prepareStatement(sql);
-
+    public boolean update(Dokter d) {
+        String sql = "UPDATE dokter SET nama=?, spesialisasi=?, no_hp=?, alamat=?, email=? WHERE id=?";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, d.getNama());
-            ps.setString(2, d.getSpesialis());
+            ps.setString(2, d.getSpesialisasi());
             ps.setString(3, d.getNoHP());
-            ps.setInt(4, d.getIdDokter());
-
-            ps.executeUpdate();
-
-        }catch(Exception e){
-
+            ps.setString(4, d.getAlamat());
+            ps.setString(5, d.getEmail());
+            ps.setInt(6, d.getIdDokter());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    // DELETE
-    public void deleteDokter(int id){
-
-        try{
-
-            String sql =
-                    "DELETE FROM dokter WHERE id_dokter=?";
-
-            PreparedStatement ps =
-                    conn.prepareStatement(sql);
-
+    public boolean delete(int id) {
+        String sql = "DELETE FROM dokter WHERE id=?";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
-
-            ps.executeUpdate();
-
-        }catch(Exception e){
-
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    // SEARCH
-    public ObservableList<Dokter> searchDokter(String keyword){
-
-        ObservableList<Dokter> list =
-                FXCollections.observableArrayList();
-
-        try{
-
-            String sql =
-                    "SELECT * FROM dokter WHERE nama LIKE ?";
-
-            PreparedStatement ps =
-                    conn.prepareStatement(sql);
-
-            ps.setString(1, "%" + keyword + "%");
-
-            ResultSet rs =
-                    ps.executeQuery();
-
-            while(rs.next()){
-
-                list.add(
-                        new Dokter(
-                                rs.getInt("id_dokter"),
-                                rs.getString("nama"),
-                                rs.getString("spesialis"),
-                                rs.getString("no_hp")
-                        )
-                );
+    public int getTotal() {
+        String sql = "SELECT COUNT(*) as total FROM dokter";
+        try (Connection conn = DBConnection.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getInt("total");
             }
-
-        }catch(Exception e){
-
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return list;
+        return 0;
     }
 }

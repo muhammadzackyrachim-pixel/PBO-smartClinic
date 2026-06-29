@@ -1,7 +1,8 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Pasien;
 import service.PasienService;
@@ -9,98 +10,53 @@ import util.AlertUtil;
 import util.ValidationUtil;
 
 public class FormPasienController {
+    @FXML private TextField txtId, txtNama, txtUmur, txtNoHP, txtAlamat, txtGulaDarah, txtTekananDarah;
+    @FXML private ComboBox<String> cbGender;
 
-    @FXML
-    private TextField txtId,
-            txtNama,
-            txtUmur,
-            txtAlamat,
-            txtHP,
-            txtTekanan,
-            txtGula;
+    private PasienService service = new PasienService();
+    private Pasien pasien;
 
-    @FXML
-    private ComboBox<String> cbGender;
-
-    private PasienService pasienService =new PasienService();
-    private boolean modeEdit = false;
-
-    @FXML
-    public void initialize(){
-        cbGender.getItems().addAll("Laki-laki","Perempuan");
+    @FXML public void initialize() {
+        cbGender.getItems().addAll("Laki-laki", "Perempuan");
     }
 
-    public void setModeTambah(){
-        modeEdit = false;
+    public void setModeTambah() {
+        pasien = new Pasien();
+        txtId.setText("Auto"); txtNama.clear(); txtUmur.clear();
+        txtNoHP.clear(); txtAlamat.clear(); txtGulaDarah.clear(); txtTekananDarah.clear();
+        cbGender.getSelectionModel().clearSelection();
     }
 
-    public void setModeEdit(Pasien p){
-        modeEdit = true;
+    public void setModeEdit(Pasien p) {
+        this.pasien = p;
         txtId.setText(String.valueOf(p.getIdPasien()));
-        txtNama.setText(p.getNama());
-        txtUmur.setText(String.valueOf(p.getUmur()));
-        cbGender.setValue(p.getGender());
+        txtNama.setText(p.getNama()); txtUmur.setText(String.valueOf(p.getUmur()));
+        cbGender.setValue(p.getGender()); txtNoHP.setText(p.getNoHP());
         txtAlamat.setText(p.getAlamat());
-        txtHP.setText(p.getNoHP());
-        txtTekanan.setText( String.valueOf( p.getTekananDarah()));
-        txtGula.setText( String.valueOf( p.getGulaDarah()));
+        txtGulaDarah.setText(String.valueOf(p.getGulaDarah()));
+        txtTekananDarah.setText(String.valueOf(p.getTekananDarah()));
     }
-    @FXML
-    public void handleSimpan(){
-        try{
-                // =====================
-                // VALIDASI
-                // =====================
-                if(ValidationUtil.isEmpty(txtNama,"Nama wajib diisi")){
-                   return;
-                }
-                if(ValidationUtil.isEmpty(txtUmur,"Umur wajib diisi")){
-                   return;
-                }
-                if(ValidationUtil.isEmpty(cbGender,"Pilih gender")){
-                  return;
-                }
 
-                // =====================
-                // OBJECT
-                // =====================
+    @FXML private void handleSimpan() {
+        if (ValidationUtil.isEmpty(txtNama.getText())) { AlertUtil.warning("Nama wajib diisi!"); return; }
+        
+        pasien.setNama(txtNama.getText());
+        pasien.setUmur(Integer.parseInt(txtUmur.getText()));
+        pasien.setGender(cbGender.getValue());
+        pasien.setNoHP(txtNoHP.getText());
+        pasien.setAlamat(txtAlamat.getText());
+        pasien.setGulaDarah(Double.parseDouble(txtGulaDarah.getText()));
+        pasien.setTekananDarah(Double.parseDouble(txtTekananDarah.getText()));
 
-                Pasien p =new Pasien(modeEdit? Integer.parseInt(txtId.getText()): 0,
-                        txtNama.getText(),
-                        Integer.parseInt(txtUmur.getText()),
-                        cbGender.getValue(),
-                        txtAlamat.getText(),
-                        txtHP.getText(),
-                        Double.parseDouble(txtTekanan.getText()),
-                        Double.parseDouble(txtGula.getText())
-                );
-
-                // =====================
-                // SERVICE
-                // =====================
-                pasienService.simpan(p,modeEdit);
-                AlertUtil.success(modeEdit? "Data berhasil diupdate": "Data berhasil disimpan");
-                closeWindow();
-
-        }catch(Exception e){
-                AlertUtil.error(e.getMessage());
-                e.printStackTrace();
+        if (service.save(pasien)) {
+            AlertUtil.success("Data disimpan");
+            ((Stage) txtNama.getScene().getWindow()).close();
+        } else {
+            AlertUtil.error("Gagal menyimpan");
         }
     }
 
-    @FXML
-    public void handleBatal(){
-
-        closeWindow();
-    }
-
-    private void closeWindow(){
-
-        Stage stage =
-                (Stage) txtNama
-                .getScene()
-                .getWindow();
-
-        stage.close();
+    @FXML private void handleBatal() {
+        ((Stage) txtNama.getScene().getWindow()).close();
     }
 }

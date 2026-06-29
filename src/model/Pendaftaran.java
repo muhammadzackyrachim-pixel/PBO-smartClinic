@@ -1,78 +1,43 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Pendaftaran {
-
-    private int idDaftar;
-    private Date tanggal;
-    private String keluhan;
-
+    private int idPendaftaran;
     private Pasien pasien;
     private Dokter dokter;
+    private LocalDate tanggalDaftar;
+    private LocalTime waktuDaftar;
+    private String keluhan;
+    private String status;
 
-    public Pendaftaran() {
-    }
+    public Pendaftaran() {}
 
-    public Pendaftaran(int idDaftar,
-                       Date tanggal,
-                       String keluhan,
-                       Pasien pasien,
-                       Dokter dokter) {
-
-        this.idDaftar = idDaftar;
-        this.tanggal = tanggal;
-        this.keluhan = keluhan;
+    public Pendaftaran(int idPendaftaran, Pasien pasien, Dokter dokter, 
+                      LocalDate tanggalDaftar, LocalTime waktuDaftar, 
+                      String keluhan, String status) {
+        this.idPendaftaran = idPendaftaran;
         this.pasien = pasien;
         this.dokter = dokter;
-    }
-
-    public int getIdDaftar() {
-        return idDaftar;
-    }
-
-    public void setIdDaftar(int idDaftar) {
-        this.idDaftar = idDaftar;
-    }
-
-    public Date getTanggal() {
-        return tanggal;
-    }
-
-    public void setTanggal(Date tanggal) {
-        this.tanggal = tanggal;
-    }
-
-    public String getKeluhan() {
-        return keluhan;
-    }
-
-    public void setKeluhan(String keluhan) {
+        this.tanggalDaftar = tanggalDaftar;
+        this.waktuDaftar = waktuDaftar;
         this.keluhan = keluhan;
+        this.status = status;
     }
 
-    public Pasien getPasien() {
-        return pasien;
-    }
-
-    public void setPasien(Pasien pasien) {
-        this.pasien = pasien;
-    }
-
-    public Dokter getDokter() {
-        return dokter;
-    }
-
-    public void setDokter(Dokter dokter) {
-        this.dokter = dokter;
-    }
-
-    // untuk tableview
-    public String getNamaPasien() {
-        return pasien != null ? pasien.getNama() : "";
-    }
-
-    public String getNamaDokter() {
-        return dokter != null ? dokter.getNama() : "";
-    }
+    public int getIdPendaftaran() { return idPendaftaran; }
+    public void setIdPendaftaran(int idPendaftaran) { this.idPendaftaran = idPendaftaran; }
+    public Pasien getPasien() { return pasien; }
+    public void setPasien(Pasien pasien) { this.pasien = pasien; }
+    public Dokter getDokter() { return dokter; }
+    public void setDokter(Dokter dokter) { this.dokter = dokter; }
+    public LocalDate getTanggalDaftar() { return tanggalDaftar; }
+    public void setTanggalDaftar(LocalDate tanggalDaftar) { this.tanggalDaftar = tanggalDaftar; }
+    public LocalTime getWaktuDaftar() { return waktuDaftar; }
+    public void setWaktuDaftar(LocalTime waktuDaftar) { this.waktuDaftar = waktuDaftar; }
+    public String getKeluhan() { return keluhan; }
+    public void setKeluhan(String keluhan) { this.keluhan = keluhan; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }

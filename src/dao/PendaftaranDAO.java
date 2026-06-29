@@ -1,265 +1,98 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+
 import database.DBConnection;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import model.*;
-
-import java.sql.*;
-// import java.sql.Connection;
-// import java.sql.ResultSet;
-// import java.sql.Statement;
-
-import model.Pendaftaran;
-import model.Pasien;
 import model.Dokter;
+import model.Pasien;
+import model.Pendaftaran;
 
 public class PendaftaranDAO {
 
-        Connection conn = DBConnection.connect();
-
-        public ObservableList<Pendaftaran> getData() {
-
-                ObservableList<Pendaftaran> list =FXCollections.observableArrayList();
-                String sql =
-                        "SELECT p.*, " +
-                        "ps.nama AS nama_pasien, " +
-                        "d.nama AS nama_dokter " +
-                        "FROM pendaftaran p " +
-                        "JOIN pasien ps ON p.id_pasien = ps.id_pasien " +
-                        "JOIN dokter d ON p.id_dokter = d.id_dokter";
-
-                try {
-
-                        //Connection conn = Koneksi.getKoneksi();
-
-                        Statement st = conn.createStatement();
-
-                        ResultSet rs = st.executeQuery(sql);
-
-                        while (rs.next()) {
-
-                        Pasien pasien = new Pasien();
-                        pasien.setIdPasien(
-                                rs.getInt("id_pasien"));
-                        pasien.setNama(
-                                rs.getString("nama_pasien"));
-
-                        Dokter dokter = new Dokter();
-                        dokter.setIdDokter(
-                                rs.getInt("id_dokter"));
-                        dokter.setNama(
-                                rs.getString("nama_dokter"));
-
-                        Pendaftaran p = new Pendaftaran();
-
-                        p.setIdDaftar(
-                                rs.getInt("id_daftar"));
-
-                        p.setTanggal(
-                                rs.getDate("tanggal"));
-
-                        p.setKeluhan(
-                                rs.getString("keluhan"));
-
-                        p.setPasien(pasien);
-
-                        p.setDokter(dokter);
-
-                        list.add(p);
-                        }
-
-                } catch (Exception e) {
-
-                        e.printStackTrace();
-                }
-
-                return list;
-        }
-    
-    // GET ALL
-    public ObservableList<Pendaftaran> getAllPendaftaran(){
-
-        ObservableList<Pendaftaran> list =
-                FXCollections.observableArrayList();
-
-        try{
-
-            String sql = """
-                    SELECT pendaftaran.*,
-                           pasien.nama AS nama_pasien,
-                           dokter.nama AS nama_dokter
-                    FROM pendaftaran
-                    JOIN pasien
-                    ON pasien.id_pasien = pendaftaran.id_pasien
-                    JOIN dokter
-                    ON dokter.id_dokter = pendaftaran.id_dokter
-                    """;
-
-            Statement st = conn.createStatement();
-
-            ResultSet rs = st.executeQuery(sql);
-
-            while(rs.next()){
-
+    public List<Pendaftaran> getAll() {
+        List<Pendaftaran> list = new ArrayList<>();
+        String sql = "SELECT p.*, pas.nama as nama_pasien, dok.nama as nama_dokter " +
+                     "FROM pendaftaran p " +
+                     "LEFT JOIN pasien pas ON p.pasien_id = pas.id " +
+                     "LEFT JOIN dokter dok ON p.dokter_id = dok.id " +
+                     "ORDER BY p.id DESC";
+        try (Connection conn = DBConnection.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Pendaftaran p = new Pendaftaran();
+                p.setIdPendaftaran(rs.getInt("id"));
+                p.setTanggalDaftar(rs.getDate("tanggal_daftar") != null ? rs.getDate("tanggal_daftar").toLocalDate() : null);
+                p.setWaktuDaftar(rs.getTime("waktu_daftar") != null ? rs.getTime("waktu_daftar").toLocalTime() : null);
+                p.setKeluhan(rs.getString("keluhan"));
+                p.setStatus(rs.getString("status"));
+                
                 Pasien pasien = new Pasien();
-                pasien.setIdPasien(
-                        rs.getInt("id_pasien"));
-
-                pasien.setNama(
-                        rs.getString("nama_pasien"));
-
+                pasien.setIdPasien(rs.getInt("pasien_id"));
+                pasien.setNama(rs.getString("nama_pasien"));
+                p.setPasien(pasien);
+                
                 Dokter dokter = new Dokter();
-                dokter.setIdDokter(
-                        rs.getInt("id_dokter"));
-
-                dokter.setNama(
-                        rs.getString("nama_dokter"));
-
-                Pendaftaran p = new Pendaftaran(
-                        rs.getInt("id_daftar"),
-                        rs.getDate("tanggal"),
-                        rs.getString("keluhan"),
-                        pasien,
-                        dokter
-                );
-
+                dokter.setIdDokter(rs.getInt("dokter_id"));
+                dokter.setNama(rs.getString("nama_dokter"));
+                p.setDokter(dokter);
+                
                 list.add(p);
             }
-
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         return list;
     }
 
-    // INSERT
-    public void insertPendaftaran(Pendaftaran p){
-
-        try{
-
-            String sql = """
-                    INSERT INTO pendaftaran
-                    (tanggal,keluhan,id_pasien,id_dokter)
-                    VALUES(?,?,?,?)
-                    """;
-
-            PreparedStatement ps =
-                    conn.prepareStatement(sql);
-
-            ps.setDate(
-                    1,
-                    new java.sql.Date(
-                            p.getTanggal().getTime()));
-
-            ps.setString(2,p.getKeluhan());
-
-            ps.setInt(
-                    3,
-                    p.getPasien().getIdPasien());
-
-            ps.setInt(
-                    4,
-                    p.getDokter().getIdDokter());
-
-            ps.executeUpdate();
-
-        }catch(Exception e){
+    public boolean insert(Pendaftaran p) {
+        String sql = "INSERT INTO pendaftaran (pasien_id, dokter_id, tanggal_daftar, waktu_daftar, keluhan, status) VALUES (?,?,?,?,?,?)";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, p.getPasien().getIdPasien());
+            ps.setInt(2, p.getDokter().getIdDokter());
+            ps.setDate(3, Date.valueOf(p.getTanggalDaftar()));
+            ps.setTime(4, Time.valueOf(p.getWaktuDaftar()));
+            ps.setString(5, p.getKeluhan());
+            ps.setString(6, p.getStatus());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    // UPDATE
-    public void updatePendaftaran(Pendaftaran p){
-
-        try{
-
-            String sql = """
-                    UPDATE pendaftaran
-                    SET tanggal=?,
-                        keluhan=?,
-                        id_pasien=?,
-                        id_dokter=?
-                    WHERE id_daftar=?
-                    """;
-
-            PreparedStatement ps =
-                    conn.prepareStatement(sql);
-
-            ps.setDate(
-                    1,
-                    new java.sql.Date(
-                            p.getTanggal().getTime()));
-
-            ps.setString(2,p.getKeluhan());
-
-            ps.setInt(
-                    3,
-                    p.getPasien().getIdPasien());
-
-            ps.setInt(
-                    4,
-                    p.getDokter().getIdDokter());
-
-            ps.setInt(
-                    5,
-                    p.getIdDaftar());
-
-            ps.executeUpdate();
-
-        }catch(Exception e){
+    public boolean updateStatus(int id, String status) {
+        String sql = "UPDATE pendaftaran SET status=? WHERE id=?";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, status);
+            ps.setInt(2, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-    // DELETE
-    public void deletePendaftaran(int id){
-
-        try{
-
-            String sql =
-                    "DELETE FROM pendaftaran WHERE id_daftar=?";
-
-            PreparedStatement ps =
-                    conn.prepareStatement(sql);
-
-            ps.setInt(1,id);
-
-            ps.executeUpdate();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-   // SEARCH
-    public ObservableList<Pasien> search(String keyword){
-
-        ObservableList<Pasien> list = FXCollections.observableArrayList();
-
-        try{
-
-            String sql =
-                    "SELECT * FROM pendaftaran WHERE  id_daftar LIKE ?";
-
-            PreparedStatement ps =
-                    conn.prepareStatement(sql);
-
-            ps.setString(1, "%" + keyword + "%");
-
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()){
-
-                //list.add( new pendaftaran() );
+    public int getTotal() {
+        String sql = "SELECT COUNT(*) as total FROM pendaftaran";
+        try (Connection conn = DBConnection.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getInt("total");
             }
-
-        }catch(Exception e){
-
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return list;
+        return 0;
     }
-
 }

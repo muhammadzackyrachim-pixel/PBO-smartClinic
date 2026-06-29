@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.LaporanController"
+            stylesheets="@style.css">
+    
+    <!-- TOP -->
+    <top>
+        <VBox spacing="10" styleClass="top-panel">
+            <Label text="LAPORAN KLINIK"
+                   styleClass="title"
+                   maxWidth="Infinity"
+                   alignment="CENTER"/>
+            <HBox spacing="15" alignment="CENTER">
+               <Button text="🔄 Refresh"
+                        onAction="#handleRefresh" 
+                        styleClass="btn-refresh"/>
+                <Button text="⬅️ Kembali"
+                        onAction="#handleBack"
+                        styleClass="btn-close"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- CENTER -->
+    <center>
+        <ScrollPane fitToWidth="true"
+                    fitToHeight="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED">
+            <VBox spacing="25" alignment="CENTER">
+                <padding>
+                    <Insets top="20" right="30" bottom="20" left="30"/>
+                </padding>
+
+                <!-- GRAFIK 1: BAR CHART TOTAL DATA -->
+                <VBox spacing="10" styleClass="chart-container">
+                    <Label text="📊 Total Data Per Modul" styleClass="chart-title"/>
+                    <BarChart fx:id="barChartTotal"
+                              prefHeight="350"
+                              prefWidth="800"
+                              VBox.vgrow="ALWAYS">
+                        <xAxis>
+                            <CategoryAxis label="Modul"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Jumlah"/>
+                        </yAxis>
+                    </BarChart>
+                </VBox>
+
+                <!-- GRAFIK 2 & 3: SIDE BY SIDE -->
+                <HBox spacing="20" alignment="CENTER">
+                    
+                    <!-- PIE CHART GENDER -->
+                    <VBox spacing="10" styleClass="chart-container" HBox.hgrow="ALWAYS">
+                        <Label text=" Distribusi Gender Pasien" styleClass="chart-title"/>
+                        <PieChart fx:id="pieChartGender"
+                                  prefHeight="350"
+                                  prefWidth="400"
+                                  VBox.vgrow="ALWAYS"/>
+                    </VBox>
+
+                    <!-- BAR CHART STATUS PENDAFTARAN -->
+                    <VBox spacing="10" styleClass="chart-container" HBox.hgrow="ALWAYS">
+                        <Label text="📋 Status Pendaftaran" styleClass="chart-title"/>
+                        <BarChart fx:id="barChartPendaftaran"
+                                  prefHeight="350"
+                                  prefWidth="400"
+                                  VBox.vgrow="ALWAYS">
+                            <xAxis>
+                                <CategoryAxis label="Status"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis label="Jumlah"/>
+                            </yAxis>
+                        </BarChart>
+                    </VBox>
+
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

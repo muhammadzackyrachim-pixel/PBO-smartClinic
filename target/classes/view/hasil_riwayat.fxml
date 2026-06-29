@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.HasilRiwayatController"
+            stylesheets="@style.css">
+    <top>
+        <VBox spacing="10" styleClass="top-panel">
+            <Label text="HASIL &amp; RIWAYAT PREDIKSI"
+                   styleClass="title"
+                   maxWidth="Infinity"
+                   alignment="CENTER"/>
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="🔄 Refresh"
+                        onAction="#loadData"
+                        styleClass="btn-refresh"/>
+                <Button text="⬅️ Kembali"
+                        onAction="#handleBack"
+                        styleClass="btn-close"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <VBox spacing="15" styleClass="main-panel" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tablePrediksi"
+                       VBox.vgrow="ALWAYS"
+                       maxWidth="Infinity">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="colPasien" text="Pasien" prefWidth="200"/>
+                    <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="150"/>
+                    <TableColumn fx:id="colHasil" text="Hasil" prefWidth="250"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

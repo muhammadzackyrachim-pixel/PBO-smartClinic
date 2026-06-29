@@ -1,8 +1,12 @@
 package controller;
 
-import javafx.collections.FXCollections;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Dokter;
 import model.Pasien;
@@ -12,75 +16,49 @@ import service.PasienService;
 import service.PendaftaranService;
 import util.AlertUtil;
 import util.ValidationUtil;
-import java.sql.Date;
-
 
 public class FormPendaftaranController {
+    @FXML private ComboBox<Pasien> cbPasien;
+    @FXML private ComboBox<Dokter> cbDokter;
+    @FXML private DatePicker dpTanggal;
+    @FXML private TextField txtWaktu, txtKeluhan;
+    @FXML private ComboBox<String> cbStatus;
 
-    @FXML
-    private TextArea txtKeluhan;
+    private PendaftaranService service = new PendaftaranService();
+    private Pendaftaran pendaftaran;
 
-    @FXML
-    private DatePicker dpTanggal;
-
-    @FXML
-    private ComboBox<Pasien> cbPasien;
-
-    @FXML
-    private ComboBox<Dokter> cbDokter;
-
-    private PendaftaranService pendaftaranService =new PendaftaranService();
-    private PasienService pasienService =new PasienService();
-    private DokterService dokterService =new DokterService();
-
-    private boolean editMode = false;
-
-    private int idEdit;
-
-    @FXML
-    public void initialize(){
-         cbPasien.setItems(FXCollections.observableArrayList(pasienService.getAll()));
-         cbDokter.setItems(FXCollections.observableArrayList(dokterService.getAll()));
+    @FXML public void initialize() {
+        cbPasien.getItems().addAll(new PasienService().getAll());
+        cbDokter.getItems().addAll(new DokterService().getAll());
+        cbStatus.getItems().addAll("Menunggu", "Diperiksa", "Selesai");
+        dpTanggal.setValue(LocalDate.now());
     }
-    @FXML
-    public void handleSimpan(){
-        try{
-           if(ValidationUtil.isEmpty(dpTanggal,"Tanggal wajib diisi")){
-                return;
-           }
-           Date tanggal =
-           Date.valueOf(dpTanggal.getValue());
-           Pendaftaran p =new Pendaftaran(idEdit,tanggal,txtKeluhan.getText(),cbPasien.getValue(),cbDokter.getValue());
-           pendaftaranService.simpan(p, editMode);
-           AlertUtil.success( "Data berhasil disimpan");
-           closeForm();
-        }catch(Exception e){
-                AlertUtil.error(e.getMessage());
+
+    public void setModeTambah() {
+        pendaftaran = new Pendaftaran();
+        txtWaktu.setText(LocalTime.now().toString().substring(0, 5));
+        txtKeluhan.clear();
+        cbStatus.setValue("Menunggu");
+    }
+
+    @FXML private void handleSimpan() {
+        if (cbPasien.getValue() == null || cbDokter.getValue() == null) { AlertUtil.warning("Pilih pasien & dokter!"); return; }
+        if (ValidationUtil.isEmpty(txtKeluhan.getText())) { AlertUtil.warning("Keluhan wajib diisi!"); return; }
+
+        pendaftaran.setPasien(cbPasien.getValue());
+        pendaftaran.setDokter(cbDokter.getValue());
+        pendaftaran.setTanggalDaftar(dpTanggal.getValue());
+        pendaftaran.setWaktuDaftar(LocalTime.parse(txtWaktu.getText() + ":00"));
+        pendaftaran.setKeluhan(txtKeluhan.getText());
+        pendaftaran.setStatus(cbStatus.getValue());
+
+        if (service.save(pendaftaran)) {
+            AlertUtil.success("Data disimpan");
+            ((Stage) cbPasien.getScene().getWindow()).close();
         }
     }
 
-    @FXML
-    public void handleBatal(){
-        closeForm();
+    @FXML private void handleBatal() {
+        ((Stage) cbPasien.getScene().getWindow()).close();
     }
-    public void setModeTambah(){
-        editMode = false;
-    }
-
-    public void setEditData(Pendaftaran p) {
-        editMode = true;
-        idEdit = p.getIdDaftar();
-        txtKeluhan.setText(p.getKeluhan());
-        cbPasien.setValue(p.getPasien());
-        cbDokter.setValue(p.getDokter());
-        dpTanggal.setValue(((java.sql.Date) p.getTanggal()).toLocalDate()
-        );
-    }
-
-    private void closeForm(){
-        Stage stage =(Stage) txtKeluhan.getScene().getWindow();
-        stage.close();
-    }
-
-
 }

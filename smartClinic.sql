@@ -1,243 +1,109 @@
-CREATE DATABASE smart_clinic;
+CREATE DATABASE IF NOT EXISTS smart_clinic;
 USE smart_clinic;
 
-CREATE TABLE users (
-    id_user INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL,
-    PASSWORD VARCHAR(100) NOT NULL,
-    ROLE VARCHAR(20)
-);
-CREATE TABLE dokter (
-    id_dokter INT AUTO_INCREMENT PRIMARY KEY,
-    nama VARCHAR(100) NOT NULL,
-    spesialis VARCHAR(100),
-    no_hp VARCHAR(20)
-);
-
-CREATE TABLE pasien (
-    id_pasien INT AUTO_INCREMENT PRIMARY KEY,
-    nama VARCHAR(100) NOT NULL,
+-- Tabel Pasien
+CREATE TABLE IF NOT EXISTS pasien(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(100),
     umur INT,
     gender VARCHAR(20),
-    alamat TEXT,
     no_hp VARCHAR(20),
-    tekanan_darah DOUBLE,
-    gula_darah DOUBLE
-);
-CREATE TABLE pendaftaran (
-    id_daftar INT AUTO_INCREMENT PRIMARY KEY,
-    tanggal DATE,
-    keluhan TEXT,
-
-    id_pasien INT,
-    id_dokter INT,
-
-    FOREIGN KEY (id_pasien)
-    REFERENCES pasien(id_pasien),
-
-    FOREIGN KEY (id_dokter)
-    REFERENCES dokter(id_dokter)
-);
-CREATE TABLE rekam_medis (
-    id_rekam INT AUTO_INCREMENT PRIMARY KEY,
-    diagnosa TEXT,
-    resep TEXT,
-    catatan TEXT,
-
-    id_pasien INT,
-    id_dokter INT,
-
-    FOREIGN KEY (id_pasien)
-    REFERENCES pasien(id_pasien),
-
-    FOREIGN KEY (id_dokter)
-    REFERENCES dokter(id_dokter)
-);
-CREATE TABLE prediksi (
-    id_prediksi INT AUTO_INCREMENT PRIMARY KEY,
-
-    hasil_prediksi VARCHAR(100),
-    probabilitas DOUBLE,
-    tanggal_prediksi DATE,
-
-    id_pasien INT,
-
-    FOREIGN KEY (id_pasien)
-    REFERENCES pasien(id_pasien)
-);
-INSERT INTO dokter(nama, spesialis, no_hp)
-VALUES
-('Dr. Andi', 'Penyakit Dalam', '081111111'),
-('Dr. Budi', 'Umum', '082222222');
-INSERT INTO pasien
-(nama, umur, gender, alamat, no_hp,
-tekanan_darah, gula_darah)
-
-VALUES
-('Siti', 25, 'Perempuan',
-'Semarang', '081234567',
-120, 90),
-
-('Ahmad', 40, 'Laki-laki',
-'Kendal', '089999999',
-150, 250);
-1);
-
-INSERT INTO pendaftaran
-(tanggal, keluhan, id_pasien, id_dokter)
-
-VALUES
-('2026-05-08',
-'Sakit kepala',
-1,
-1);
-
-INSERT INTO rekam_medis
-(diagnosa, resep, catatan,
-id_pasien, id_dokter)
-
-VALUES
-(
-'Hipertensi',
-'Paracetamol',
-'Kontrol 1 minggu',
-2,
-1
-);
-
-INSERT INTO prediksi
-(hasil_prediksi,
-probabilitas,
-tanggal_prediksi,
-id_pasien)
-
-VALUES
-(
-'Risiko Diabetes Tinggi',
-0.89,
-'2026-05-08',
-2
-);
-
-SELECT
-p.nama,
-d.nama,
-pd.keluhan
-
-FROM pendaftaran pd
-
-JOIN pasien p
-ON pd.id_pasien = p.id_pasien
-
-JOIN dokter d
-ON pd.id_dokter = d.id_dokter;
-
-SELECT
-p.nama,
-r.diagnosa,
-r.resep
-
-FROM rekam_medis r
-
-JOIN pasien p
-ON r.id_pasien = p.id_pasien;
-
-SELECT
-p.nama,
-pr.hasil_prediksi,
-pr.probabilitas
-
-FROM prediksi pr
-
-JOIN pasien p
-ON pr.id_pasien = p.id_pasien;
-
-
-
-CREATE TABLE roles (
-    id_role INT AUTO_INCREMENT PRIMARY KEY,
-    nama_role VARCHAR(50)
-);
-CREATE TABLE users (
-    id_user INT AUTO_INCREMENT PRIMARY KEY,
-
-    nama VARCHAR(100),
-    username VARCHAR(50),
-    PASSWORD VARCHAR(255),
-
-    id_role INT,
-    id_dokter INT NULL,
-
-    FOREIGN KEY (id_role)
-        REFERENCES roles(id_role),
-
-    FOREIGN KEY (id_dokter)
-        REFERENCES dokter(id_dokter)
-);
-
-INSERT INTO roles(nama_role)
-VALUES
-('Admin'),
-('Petugas'),
-('Dokter');
-
-INSERT INTO users
-(nama, username, PASSWORD, id_role)
-VALUES
-('Administrator', 'admin', '123', 1),
-('Petugas Klinik', 'petugas', '123', 2);
-
-
--- =========================
--- TABEL OBAT
--- =========================
-CREATE TABLE obat (
-    id_obat INT AUTO_INCREMENT PRIMARY KEY,
-    nama_obat VARCHAR(100),
-    stok INT,
-    harga DOUBLE,
-    aturan_pakai VARCHAR(100),
-    kode_kfa INT
-);
-
--- =========================
--- TABEL PEMERIKSAAN
--- =========================
-CREATE TABLE pemeriksaan (
-    id_periksa INT AUTO_INCREMENT PRIMARY KEY,
-
-    id_daftar INT,
-
-    tanggal_periksa DATE,
-
-    diagnosa TEXT,
-    tekanan_darah DOUBLE,
+    alamat TEXT,
     gula_darah DOUBLE,
-    suhu DOUBLE,
-    berat_badan DOUBLE,
+    tekanan_darah DOUBLE
+);
 
+-- Tabel Dokter
+CREATE TABLE IF NOT EXISTS dokter(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(100),
+    spesialisasi VARCHAR(100),
+    no_hp VARCHAR(20),
+    alamat TEXT,
+    email VARCHAR(100)
+);
+
+-- Tabel Obat
+CREATE TABLE IF NOT EXISTS obat(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama_obat VARCHAR(100),
+    jenis VARCHAR(50),
+    dosis VARCHAR(100),
+    stok INT DEFAULT 0,
+    harga DOUBLE,
+    keterangan TEXT
+);
+
+-- Tabel Petugas
+CREATE TABLE IF NOT EXISTS petugas(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama VARCHAR(100),
+    username VARCHAR(50) UNIQUE,
+    password VARCHAR(100),
+    role VARCHAR(50),
+    no_hp VARCHAR(20),
+    email VARCHAR(100)
+);
+
+-- Tabel Pendaftaran
+CREATE TABLE IF NOT EXISTS pendaftaran(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pasien_id INT,
+    dokter_id INT,
+    tanggal_daftar DATE,
+    waktu_daftar TIME,
+    keluhan TEXT,
+    status VARCHAR(50) DEFAULT 'Menunggu',
+    FOREIGN KEY (pasien_id) REFERENCES pasien(id) ON DELETE CASCADE,
+    FOREIGN KEY (dokter_id) REFERENCES dokter(id) ON DELETE SET NULL
+);
+
+-- Tabel Rekam Medis
+CREATE TABLE IF NOT EXISTS rekam_medis(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pendaftaran_id INT,
+    pasien_id INT,
+    dokter_id INT,
+    tanggal_periksa DATE,
+    diagnosis TEXT,
+    tindakan TEXT,
     catatan TEXT,
-
-    hasil_prediksi VARCHAR(100),
-    tingkat_resiko VARCHAR(50),
-
-    FOREIGN KEY (id_daftar)
-        REFERENCES pendaftaran(id_daftar)
-        ON DELETE CASCADE
+    FOREIGN KEY (pendaftaran_id) REFERENCES pendaftaran(id) ON DELETE CASCADE,
+    FOREIGN KEY (pasien_id) REFERENCES pasien(id) ON DELETE CASCADE,
+    FOREIGN KEY (dokter_id) REFERENCES dokter(id) ON DELETE SET NULL
 );
 
--- =========================
--- TABEL REKAM MEDIS
--- =========================
-CREATE TABLE rekam_medis (
-    id_rekam INT AUTO_INCREMENT PRIMARY KEY,
-    id_periksa INT,
-    tanggal DATE,
-    ringkasan TEXT,
-    FOREIGN KEY (id_periksa)
-        REFERENCES pemeriksaan(id_periksa)
-        ON DELETE CASCADE
+-- Tabel Prediksi
+CREATE TABLE IF NOT EXISTS prediksi(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pasien_id INT,
+    pregnancies INT,
+    glucose DOUBLE,
+    blood_pressure DOUBLE,
+    skin_thickness DOUBLE,
+    insulin DOUBLE,
+    bmi DOUBLE,
+    pedigree DOUBLE,
+    age INT,
+    hasil VARCHAR(100),
+    tanggal_prediksi DATE,
+    FOREIGN KEY (pasien_id) REFERENCES pasien(id) ON DELETE CASCADE
 );
 
+-- Data Dummy
+INSERT INTO pasien(nama, umur, gender, no_hp, alamat, gula_darah, tekanan_darah) VALUES 
+('Ahmad', 23, 'Laki-laki', '08123456789', 'Jl. Merdeka No. 1', 90.0, 120.0),
+('Siti', 20, 'Perempuan', '08123456790', 'Jl. Sudirman No. 2', 85.0, 110.0),
+('Budi', 30, 'Laki-laki', '08123456791', 'Jl. Ahmad Yani No. 3', 95.0, 125.0);
 
+INSERT INTO dokter(nama, spesialisasi, no_hp, alamat, email) VALUES 
+('Dr. Andi', 'Umum', '08123456701', 'Jl. Kesehatan No. 1', 'andi@clinic.com'),
+('Dr. Rina', 'Anak', '08123456702', 'Jl. Kesehatan No. 2', 'rina@clinic.com');
 
+INSERT INTO obat(nama_obat, jenis, dosis, stok, harga, keterangan) VALUES 
+('Paracetamol', 'Tablet', '500mg', 100, 5000, 'Pereda nyeri'),
+('Amoxicillin', 'Kapsul', '500mg', 50, 10000, 'Antibiotik');
+
+INSERT INTO petugas(nama, username, password, role, no_hp, email) VALUES 
+('Admin Utama', 'admin', 'admin123', 'Admin', '08123456789', 'admin@clinic.com'),
+('Perawat 1', 'perawat1', 'perawat123', 'Perawat', '08123456790', 'perawat1@clinic.com');

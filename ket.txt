@@ -1,3 +1,5 @@
+--Arsitektur Sistem Klinik--
+
 Pasien Datang
       ↓
 Pendaftaran
@@ -9,10 +11,3 @@ Rekam Medis
 Prediksi Machine Learning
       ↓
 Hasil & Riwayat
-
-+Pasien
-+Dokter
-+Pendaftaram Periksa
-+Pemeriksaan Pasien
-+print resep
-+refactor

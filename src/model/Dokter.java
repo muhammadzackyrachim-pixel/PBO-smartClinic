@@ -1,71 +1,39 @@
 package model;
 
-public class Dokter extends Person {
-
+public class Dokter {
     private int idDokter;
-    private String spesialis;
+    private String nama;
+    private String spesialisasi;
     private String noHP;
-    // constructor kosong
-    public Dokter(){
+    private String alamat;
+    private String email;
 
-    }
-    public Dokter(int idDokter,
-                  String nama,
-                  String spesialis,
-                  String noHP) {
+    public Dokter() {}
 
-        super(nama);
-
+    public Dokter(int idDokter, String nama, String spesialisasi, String noHP, String alamat, String email) {
         this.idDokter = idDokter;
-        this.spesialis = spesialis;
+        this.nama = nama;
+        this.spesialisasi = spesialisasi;
         this.noHP = noHP;
+        this.alamat = alamat;
+        this.email = email;
     }
 
-    public int getIdDokter() {
-        return idDokter;
-    }
+    public int getIdDokter() { return idDokter; }
+    public void setIdDokter(int idDokter) { this.idDokter = idDokter; }
+    public String getNama() { return nama; }
+    public void setNama(String nama) { this.nama = nama; }
+    public String getSpesialisasi() { return spesialisasi; }
+    public void setSpesialisasi(String spesialisasi) { this.spesialisasi = spesialisasi; }
+    public String getNoHP() { return noHP; }
+    public void setNoHP(String noHP) { this.noHP = noHP; }
+    public String getAlamat() { return alamat; }
+    public void setAlamat(String alamat) { this.alamat = alamat; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getSpesialis() {
-        return spesialis;
-    }
-
-    public String getNoHP() {
-        return noHP;
-    }
-
-    public void setIdDokter(int idDokter) {
-        this.idDokter = idDokter;
-    }
-
-    public void setSpesialis(String spesialis) {
-        this.spesialis = spesialis;
-    }
-
-    public void setNoHP(String noHP) {
-        this.noHP = noHP;
-    }
-
-    public void periksaPasien() {
-
-        System.out.println(
-                "Dokter memeriksa pasien");
-    }
-
-    public void buatDiagnosa() {
-
-        System.out.println(
-                "Dokter membuat diagnosa");
-    }
-
-    @Override
-    public void tampilInfo() {
-
-        System.out.println("Dokter : " + nama);
-        System.out.println("Spesialis : " + spesialis);
-    }
     @Override
     public String toString() {
-
-        return nama;
-    }    
+        return nama + " (" + spesialisasi + ")";
+    }
 }

@@ -1,144 +1,80 @@
 package controller;
 
-import dao.DokterDAO;
-import javafx.collections.*;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-// import javafx.scene.Parent;
-// import javafx.scene.Scene;
 import model.Dokter;
+import service.DokterService;
 import util.AlertUtil;
 import util.SceneUtil;
-import service.DokterService;
 
-public class DokterController {
-    
+public class DokterController implements Initializable {
+    @FXML private TableView<Dokter> tableDokter;
+    @FXML private TableColumn<Dokter, Integer> colId;
+    @FXML private TableColumn<Dokter, String> colNama, colSpesialisasi, colHP, colEmail;
 
-    @FXML
-    private TextField txtId, txtCari;
+    private DokterService service = new DokterService();
+    ObservableList<Dokter> list = FXCollections.observableArrayList();
 
-    @FXML
-    private TableView<Dokter> tableDokter;
-
-    @FXML
-    private TableColumn<Dokter,Integer> colId;
-
-    @FXML
-    private TableColumn<Dokter,String> colNama;
-
-    @FXML
-    private TableColumn<Dokter,String> colSpesialis;
-
-    @FXML
-    private TableColumn<Dokter,String> colHP;
-
-    ObservableList<Dokter> list =
-            FXCollections.observableArrayList();
-
-    //DokterDAO dokterDAO =       new DokterDAO();
-    private DokterService dokterService =new DokterService();
-
-    @FXML
-    public void initialize(){
-
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         colId.setCellValueFactory(new PropertyValueFactory<>("idDokter"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
-        colSpesialis.setCellValueFactory(new PropertyValueFactory<>("spesialis"));
+        colSpesialisasi.setCellValueFactory(new PropertyValueFactory<>("spesialisasi"));
         colHP.setCellValueFactory(new PropertyValueFactory<>("noHP"));
-        tableDokter.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         loadData();
     }
 
-    @FXML
-    public void loadData(){
+    @FXML public void loadData() {
         list.clear();
-        list = dokterService.getAll();
-        tableDokter.setItems(list);
-    }
-    @FXML
-    public void handleTambah() {
-        try {
-            FXMLLoader loader =new FXMLLoader(getClass().getResource("/view/form_dokter.fxml"));
-            Stage stage =SceneUtil.createModal(loader,"Tambah Dokter",800,420);
-            FormDokterController controller =loader.getController();
-            controller.setModeTambah();
-            stage.showAndWait();
-            loadData();
-
-        } catch (Exception e) {
-            AlertUtil.error("Gagal membuka form");
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    public void handleEdit() {
-        Dokter dokter =tableDokter.getSelectionModel().getSelectedItem();
-        if (dokter == null) {
-            AlertUtil.warning("Pilih data dokter dahulu!");
-            return;
-        }
-        try {
-            FXMLLoader loader =new FXMLLoader(getClass().getResource("/view/form_dokter.fxml"));
-            Stage stage =SceneUtil.createModal(loader,"Edit Dokter",800,420);
-            FormDokterController controller =loader.getController();
-            controller.setModeEdit(dokter);
-            stage.showAndWait();
-            loadData();
-        } catch (Exception e) {
-            AlertUtil.error("Gagal membuka form edit");
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    public void handleHapus(){
-        try{
-            Dokter dokter =tableDokter.getSelectionModel().getSelectedItem();
-            if(dokter == null){
-                AlertUtil.warning("Pilih data dokter dahulu!");
-                return;
-            }
-            dokterService.delete(dokter.getIdDokter());
-            AlertUtil.success("Data berhasil dihapus");
-            loadData();
-
-        }catch(Exception e){
-            AlertUtil.error(e.getMessage());
-            e.printStackTrace();
-        }
-    }        
-    // @FXML
-    // public void handleHapus(){
-    //     Dokter d =tableDokter.getSelectionModel().getSelectedItem();
-    //     if(d == null){
-    //         Alert alert =
-    //                 new Alert(Alert.AlertType.WARNING);
-    //         alert.setContentText(
-    //                 "Pilih data dokter dahulu!");
-    //         alert.show();
-    //         return;
-    //     }
-    //     dokterDAO.deleteDokter(d.getIdDokter());
-    //     loadData();
-    // }
-
-    @FXML
-    public void handleCari(){
-
-        list.clear();
-        list = dokterService.search(txtCari.getText());
+        list.addAll(service.getAll());
         tableDokter.setItems(list);
     }
 
-    @FXML
-    public void handleClose(){
-        Stage stage =
-                (Stage) tableDokter
-                        .getScene()
-                        .getWindow();
+    @FXML public void handleTambah() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_dokter.fxml"));
+            Stage stage = SceneUtil.createModal(loader, "Tambah Dokter", 800, 400);
+            FormDokterController ctrl = loader.getController();
+            ctrl.setModeTambah();
+            stage.showAndWait();
+            loadData();
+        } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
+    }
 
-        stage.close();
+    @FXML public void handleEdit() {
+        Dokter d = tableDokter.getSelectionModel().getSelectedItem();
+        if (d == null) { AlertUtil.warning("Pilih data dulu!"); return; }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_dokter.fxml"));
+            Stage stage = SceneUtil.createModal(loader, "Edit Dokter", 800, 400);
+            FormDokterController ctrl = loader.getController();
+            ctrl.setModeEdit(d);
+            stage.showAndWait();
+            loadData();
+        } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
+    }
+
+    @FXML public void handleHapus() {
+        Dokter d = tableDokter.getSelectionModel().getSelectedItem();
+        if (d == null) { AlertUtil.warning("Pilih data dulu!"); return; }
+        if (AlertUtil.confirm("Yakin hapus?")) {
+            service.delete(d.getIdDokter());
+            loadData();
+        }
+    }
+
+    @FXML public void handleBack() {
+        SceneUtil.switchScene((Stage) tableDokter.getScene().getWindow(), "/view/dashboard.fxml");
     }
 }

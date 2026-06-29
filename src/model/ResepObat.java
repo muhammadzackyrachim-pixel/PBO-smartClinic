@@ -1,74 +1,30 @@
 package model;
 
 public class ResepObat {
-
     private int idResep;
-
-    private Pemeriksaan pemeriksaan;
-
+    private RekamMedis rekamMedis;
     private Obat obat;
-
     private int jumlah;
+    private String aturanPakai;
 
-    private String dosis;
+    public ResepObat() {}
 
-    private String keterangan;
-
-    public ResepObat() {
-    }
-
-    public int getIdResep() {
-        return idResep;
-    }
-
-    public void setIdResep(int idResep) {
+    public ResepObat(int idResep, RekamMedis rekamMedis, Obat obat, int jumlah, String aturanPakai) {
         this.idResep = idResep;
-    }
-
-    public Pemeriksaan getPemeriksaan() {
-        return pemeriksaan;
-    }
-
-    public void setPemeriksaan(Pemeriksaan pemeriksaan) {
-        this.pemeriksaan = pemeriksaan;
-    }
-
-    public Obat getObat() {
-        return obat;
-    }
-
-    public void setObat(Obat obat) {
+        this.rekamMedis = rekamMedis;
         this.obat = obat;
-    }
-
-    public int getJumlah() {
-        return jumlah;
-    }
-
-    public void setJumlah(int jumlah) {
         this.jumlah = jumlah;
+        this.aturanPakai = aturanPakai;
     }
 
-    public String getDosis() {
-        return dosis;
-    }
-
-    public void setDosis(String dosis) {
-        this.dosis = dosis;
-    }
-
-    public String getKeterangan() {
-        return keterangan;
-    }
-
-    public void setKeterangan(String keterangan) {
-        this.keterangan = keterangan;
-    }
-    @Override
-    public String toString() {
-
-        return obat != null
-                ? obat.getNamaObat()
-                : "";
-    }    
+    public int getIdResep() { return idResep; }
+    public void setIdResep(int idResep) { this.idResep = idResep; }
+    public RekamMedis getRekamMedis() { return rekamMedis; }
+    public void setRekamMedis(RekamMedis rekamMedis) { this.rekamMedis = rekamMedis; }
+    public Obat getObat() { return obat; }
+    public void setObat(Obat obat) { this.obat = obat; }
+    public int getJumlah() { return jumlah; }
+    public void setJumlah(int jumlah) { this.jumlah = jumlah; }
+    public String getAturanPakai() { return aturanPakai; }
+    public void setAturanPakai(String aturanPakai) { this.aturanPakai = aturanPakai; }
 }

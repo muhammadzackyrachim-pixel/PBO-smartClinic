@@ -1,7 +1,5 @@
 package model;
 
 public interface Predictable {
-
-    void prosesPrediksi();
-
+    String prediksi();
 }

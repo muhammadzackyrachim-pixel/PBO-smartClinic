@@ -1,27 +1,30 @@
 package model;
 
-public abstract class Person {
+public class Person {
+    private int id;
+    private String nama;
+    private String alamat;
+    private String telepon;
+    private String email;
 
-    // UBAH private → protected
-    protected String nama;
-    // constructor kosong
-    public Person(){
+    public Person() {}
 
-    }
-    public Person(String nama) {
-
+    public Person(int id, String nama, String alamat, String telepon, String email) {
+        this.id = id;
         this.nama = nama;
+        this.alamat = alamat;
+        this.telepon = telepon;
+        this.email = email;
     }
 
-    public String getNama() {
-
-        return nama;
-    }
-
-    public void setNama(String nama) {
-
-        this.nama = nama;
-    }
-
-    public abstract void tampilInfo();
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public String getNama() { return nama; }
+    public void setNama(String nama) { this.nama = nama; }
+    public String getAlamat() { return alamat; }
+    public void setAlamat(String alamat) { this.alamat = alamat; }
+    public String getTelepon() { return telepon; }
+    public void setTelepon(String telepon) { this.telepon = telepon; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 }
