@@ -23,94 +23,96 @@
     </top>
 
     <center>
-        <VBox alignment="CENTER" spacing="15">
-            <padding>
-                <Insets top="10" right="50" bottom="20" left="50"/>
-            </padding>
-            
-            <GridPane alignment="CENTER" hgap="20" vgap="12" maxWidth="600">
-                <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT" minWidth="150" prefWidth="150"/>
-                    <ColumnConstraints minWidth="300" prefWidth="300"/>
-                </columnConstraints>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox alignment="CENTER" spacing="15">
+                <padding>
+                    <Insets top="10" right="50" bottom="20" left="50"/>
+                </padding>
+                
+                <GridPane alignment="CENTER" hgap="20" vgap="12" maxWidth="600">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="150" prefWidth="150"/>
+                        <ColumnConstraints minWidth="300" prefWidth="300"/>
+                    </columnConstraints>
 
-                <Label text="Pilih Pasien" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="cbPasien" 
-                          prefWidth="300" 
-                          promptText="Pilih Pasien"
-                          GridPane.rowIndex="0" 
-                          GridPane.columnIndex="1"/>
+                    <Label text="Pilih Pasien" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <ComboBox fx:id="cbPasien" 
+                              prefWidth="300" 
+                              promptText="Pilih Pasien"
+                              GridPane.rowIndex="0" 
+                              GridPane.columnIndex="1"/>
 
-                <Label text="Pregnancies" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtPregnancies" 
-                           promptText="Jumlah Kehamilan" 
-                           GridPane.rowIndex="1" 
-                           GridPane.columnIndex="1"/>
+                    <Label text="Pregnancies" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtPregnancies" 
+                               promptText="Jumlah Kehamilan" 
+                               GridPane.rowIndex="1" 
+                               GridPane.columnIndex="1"/>
 
-                <Label text="Glucose" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtGlucose" 
-                           promptText="Kadar Glukosa" 
-                           GridPane.rowIndex="2" 
-                           GridPane.columnIndex="1"/>
+                    <Label text="Glucose" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtGlucose" 
+                               promptText="Kadar Glukosa" 
+                               GridPane.rowIndex="2" 
+                               GridPane.columnIndex="1"/>
 
-                <Label text="Blood Pressure" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtBloodPressure" 
-                           promptText="Tekanan Darah" 
-                           GridPane.rowIndex="3" 
-                           GridPane.columnIndex="1"/>
+                    <Label text="Blood Pressure" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtBloodPressure" 
+                               promptText="Tekanan Darah" 
+                               GridPane.rowIndex="3" 
+                               GridPane.columnIndex="1"/>
 
-                <Label text="Skin Thickness" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtSkinThickness" 
-                           promptText="Ketebalan Kulit" 
-                           GridPane.rowIndex="4" 
-                           GridPane.columnIndex="1"/>
+                    <Label text="Skin Thickness" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtSkinThickness" 
+                               promptText="Ketebalan Kulit" 
+                               GridPane.rowIndex="4" 
+                               GridPane.columnIndex="1"/>
 
-                <Label text="Insulin" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtInsulin" 
-                           promptText="Kadar Insulin" 
-                           GridPane.rowIndex="5" 
-                           GridPane.columnIndex="1"/>
+                    <Label text="Insulin" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtInsulin" 
+                               promptText="Kadar Insulin" 
+                               GridPane.rowIndex="5" 
+                               GridPane.columnIndex="1"/>
 
-                <Label text="BMI" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtBMI" 
-                           promptText="Body Mass Index" 
-                           GridPane.rowIndex="6" 
-                           GridPane.columnIndex="1"/>
+                    <Label text="BMI" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtBMI" 
+                               promptText="Body Mass Index" 
+                               GridPane.rowIndex="6" 
+                               GridPane.columnIndex="1"/>
 
-                <Label text="Pedigree Function" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtPedigree" 
-                           promptText="Diabetes Pedigree Function" 
-                           GridPane.rowIndex="7" 
-                           GridPane.columnIndex="1"/>
+                    <Label text="Pedigree Function" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtPedigree" 
+                               promptText="Diabetes Pedigree Function" 
+                               GridPane.rowIndex="7" 
+                               GridPane.columnIndex="1"/>
 
-                <Label text="Age" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtAge" 
-                           promptText="Usia" 
-                           GridPane.rowIndex="8" 
-                           GridPane.columnIndex="1"/>
-            </GridPane>
+                    <Label text="Age" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtAge" 
+                               promptText="Usia" 
+                               GridPane.rowIndex="8" 
+                               GridPane.columnIndex="1"/>
+                </GridPane>
 
-            <!-- TOMBOL PREDIKSI DAN KEMBALI -->
-            <HBox spacing="15" alignment="CENTER">
-                <Button text="Prediksi" 
-                        prefWidth="200" 
-                        prefHeight="40"
-                        onAction="#handlePrediksi"
-                        styleClass="btn-cari"/>
-                <Button text="Kembali" 
-                        prefWidth="120" 
-                        prefHeight="40"
-                        onAction="#handleBack"
-                        styleClass="btn-close"/>
-            </HBox>
+                <!-- TOMBOL PREDIKSI DAN KEMBALI -->
+                <HBox spacing="15" alignment="CENTER">
+                    <Button text="Prediksi" 
+                            prefWidth="200" 
+                            prefHeight="40"
+                            onAction="#handlePrediksi"
+                            styleClass="btn-cari"/>
+                    <Button text="Kembali" 
+                            prefWidth="120" 
+                            prefHeight="40"
+                            onAction="#handleBack"
+                            styleClass="btn-close"/>
+                </HBox>
 
-            <VBox alignment="CENTER" spacing="10">
-                <Label text="HASIL PREDIKSI"
-                       styleClass="section-title"/>
-                <Label fx:id="lblHasil" 
-                       text="Belum ada prediksi"
-                       styleClass="dashboard-subtitle"/>
+                <VBox alignment="CENTER" spacing="10">
+                    <Label text="HASIL PREDIKSI"
+                           styleClass="section-title"/>
+                    <Label fx:id="lblHasil" 
+                           text="Belum ada prediksi"
+                           styleClass="dashboard-subtitle"/>
+                </VBox>
             </VBox>
-        </VBox>
+        </ScrollPane>
     </center>
 </BorderPane>

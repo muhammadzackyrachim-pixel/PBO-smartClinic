@@ -11,4 +11,5 @@ public class PrediksiService {
     public List<Prediksi> getAll() { return dao.getAll(); }
     public boolean save(Prediksi p) { return dao.insert(p); }
     public int getTotal() { return dao.getTotal(); }
+    public Prediksi getLatestByPasienId(int pasienId) { return dao.getLatestByPasienId(pasienId); }
 }

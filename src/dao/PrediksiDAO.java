@@ -62,6 +62,34 @@ public class PrediksiDAO {
         }
     }
 
+    public Prediksi getLatestByPasienId(int pasienId) {
+        String sql = "SELECT * FROM prediksi WHERE pasien_id = ? ORDER BY id DESC LIMIT 1";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, pasienId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Prediksi p = new Prediksi();
+                    p.setIdPrediksi(rs.getInt("id"));
+                    p.setPregnancies(rs.getInt("pregnancies"));
+                    p.setGlucose(rs.getDouble("glucose"));
+                    p.setBloodPressure(rs.getDouble("blood_pressure"));
+                    p.setSkinThickness(rs.getDouble("skin_thickness"));
+                    p.setInsulin(rs.getDouble("insulin"));
+                    p.setBmi(rs.getDouble("bmi"));
+                    p.setPedigree(rs.getDouble("pedigree"));
+                    p.setAge(rs.getInt("age"));
+                    p.setHasil(rs.getString("hasil"));
+                    p.setTanggalPrediksi(rs.getDate("tanggal_prediksi") != null ? rs.getDate("tanggal_prediksi").toLocalDate() : null);
+                    return p;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public int getTotal() {
         String sql = "SELECT COUNT(*) as total FROM prediksi";
         try (Connection conn = DBConnection.connect();
