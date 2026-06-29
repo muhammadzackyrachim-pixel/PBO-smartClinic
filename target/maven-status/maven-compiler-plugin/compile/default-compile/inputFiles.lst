@@ -1,54 +1,54 @@
-D:\Tugas Semester 4\PBO\smartClinic\src\dao\PasienDAO.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Pendaftaran2.java
-D:\Tugas Semester 4\PBO\smartClinic\src\service\DokterService.java
-D:\Tugas Semester 4\PBO\smartClinic\src\service\PendaftaranService.java
-D:\Tugas Semester 4\PBO\smartClinic\src\dao\PrediksiDAO.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\DokterController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\util\AlertUtil.java
-D:\Tugas Semester 4\PBO\smartClinic\src\dao\PendaftaranDAO.java
-D:\Tugas Semester 4\PBO\smartClinic\src\service\PemeriksaanService.java
-D:\Tugas Semester 4\PBO\smartClinic\src\service\PrediksiService.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Obat.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\RekamMedis.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\PetugasController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormPendaftaranController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\dao\ObatDAO.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Pendaftaran.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\User.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\PrediksiController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\RiwayatPemeriksaanController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Petugas.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\RekamMedisController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\ObatController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\ResepObat.java
-D:\Tugas Semester 4\PBO\smartClinic\src\util\SceneUtil.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormRekamMedisController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Klinik.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Pemeriksaan.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormPasienController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormPemeriksaanController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\PasienController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\dao\DokterDAO.java
-D:\Tugas Semester 4\PBO\smartClinic\src\dao\PemeriksaanDAO.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Dokter.java
-D:\Tugas Semester 4\PBO\smartClinic\src\dao\PetugasDAO.java
-D:\Tugas Semester 4\PBO\smartClinic\src\service\PasienService.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\PemeriksaanController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Person.java
-D:\Tugas Semester 4\PBO\smartClinic\src\service\ObatService.java
-D:\Tugas Semester 4\PBO\smartClinic\src\com\AppMain.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\DashboardController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormPetugasController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormObatController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\database\DBConnection.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\HasilRiwayatController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Pasien.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Predictable.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormDokterController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\service\PetugasService.java
-D:\Tugas Semester 4\PBO\smartClinic\src\service\RekamMedisService.java
-D:\Tugas Semester 4\PBO\smartClinic\src\dao\RekamMedisDAO.java
-D:\Tugas Semester 4\PBO\smartClinic\src\util\ValidationUtil.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\LaporanController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\controller\PendaftaranController.java
-D:\Tugas Semester 4\PBO\smartClinic\src\model\Prediksi.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\RekamMedis.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\PetugasDAO.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Predictable.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Pendaftaran.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\ResepObat.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\RiwayatPemeriksaanController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\PasienDAO.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\util\SceneUtil.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\ObatController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\PasienController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\PemeriksaanController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\PrediksiService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\PrediksiController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\RekamMedisController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\PrediksiDAO.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\FormDokterController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\ObatDAO.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\PendaftaranController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\RekamMedisDAO.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Dokter.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Obat.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\FormRekamMedisController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\database\DBConnection.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\util\ValidationUtil.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\FormPendaftaranController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Klinik.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\PemeriksaanDAO.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Person.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\ObatService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Prediksi.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\DokterService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\RekamMedisService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\LaporanController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\com\AppMain.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Pemeriksaan.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\FormPasienController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\HasilRiwayatController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\FormPemeriksaanController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\PemeriksaanService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\FormObatController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Pasien.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\PendaftaranDAO.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\util\AlertUtil.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\FormPetugasController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Petugas.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\DokterDAO.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\PetugasService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\DashboardController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Pendaftaran2.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\PasienService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\User.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\PendaftaranService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\PetugasController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\DokterController.java
