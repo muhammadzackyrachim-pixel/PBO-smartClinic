@@ -1,30 +1,35 @@
 package model;
+import java.time.LocalDate;
 
 public class Pemeriksaan {
     private int idPemeriksaan;
-    private RekamMedis rekamMedis;
-    private String jenisPemeriksaan;
-    private String hasil;
-    private String nilaiRujukan;
+    private Pasien pasien;
+    private Dokter dokter;
+    private LocalDate tanggalPeriksa;
+    private String tekananDarah;
+    private double suhuTubuh;
+    private double beratBadan;
+    private double tinggiBadan;
+    private String catatan;
 
     public Pemeriksaan() {}
-
-    public Pemeriksaan(int idPemeriksaan, RekamMedis rekamMedis, String jenisPemeriksaan, String hasil, String nilaiRujukan) {
-        this.idPemeriksaan = idPemeriksaan;
-        this.rekamMedis = rekamMedis;
-        this.jenisPemeriksaan = jenisPemeriksaan;
-        this.hasil = hasil;
-        this.nilaiRujukan = nilaiRujukan;
-    }
-
+    // Getters & Setters (Generate otomatis di IDE Anda)
     public int getIdPemeriksaan() { return idPemeriksaan; }
     public void setIdPemeriksaan(int idPemeriksaan) { this.idPemeriksaan = idPemeriksaan; }
-    public RekamMedis getRekamMedis() { return rekamMedis; }
-    public void setRekamMedis(RekamMedis rekamMedis) { this.rekamMedis = rekamMedis; }
-    public String getJenisPemeriksaan() { return jenisPemeriksaan; }
-    public void setJenisPemeriksaan(String jenisPemeriksaan) { this.jenisPemeriksaan = jenisPemeriksaan; }
-    public String getHasil() { return hasil; }
-    public void setHasil(String hasil) { this.hasil = hasil; }
-    public String getNilaiRujukan() { return nilaiRujukan; }
-    public void setNilaiRujukan(String nilaiRujukan) { this.nilaiRujukan = nilaiRujukan; }
+    public Pasien getPasien() { return pasien; }
+    public void setPasien(Pasien pasien) { this.pasien = pasien; }
+    public Dokter getDokter() { return dokter; }
+    public void setDokter(Dokter dokter) { this.dokter = dokter; }
+    public LocalDate getTanggalPeriksa() { return tanggalPeriksa; }
+    public void setTanggalPeriksa(LocalDate tanggalPeriksa) { this.tanggalPeriksa = tanggalPeriksa; }
+    public String getTekananDarah() { return tekananDarah; }
+    public void setTekananDarah(String tekananDarah) { this.tekananDarah = tekananDarah; }
+    public double getSuhuTubuh() { return suhuTubuh; }
+    public void setSuhuTubuh(double suhuTubuh) { this.suhuTubuh = suhuTubuh; }
+    public double getBeratBadan() { return beratBadan; }
+    public void setBeratBadan(double beratBadan) { this.beratBadan = beratBadan; }
+    public double getTinggiBadan() { return tinggiBadan; }
+    public void setTinggiBadan(double tinggiBadan) { this.tinggiBadan = tinggiBadan; }
+    public String getCatatan() { return catatan; }
+    public void setCatatan(String catatan) { this.catatan = catatan; }
 }

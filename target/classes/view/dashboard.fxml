@@ -18,18 +18,29 @@
                 <Button text="🩺 Dokter" styleClass="menu-btn" onAction="#openDokter"/>
                 <Button text="👩‍💼 Petugas" styleClass="menu-btn" onAction="#openPetugas"/>
                 <Button text="💊 Obat" styleClass="menu-btn" onAction="#openObat"/>
+                
                 <Label text="TRANSAKSI" styleClass="menu-group"/>
                 <Button text="📝 Pendaftaran" styleClass="menu-btn" onAction="#openPendaftaran"/>
-                <Button text="🩻 Pemeriksaan" styleClass="menu-btn" onAction="#openRekamMedis"/>
+                
+                <!-- ✅ MENU BARU: PEMERIKSAAN DOKTER -->
+                <Button text="🩺 Pemeriksaan Dokter" styleClass="menu-btn" onAction="#openPemeriksaan"/>
+                
+                <!-- ✅ MENU BARU: RIWAYAT PEMERIKSAAN -->
+                <Button text="📜 Riwayat Periksa" styleClass="menu-btn" onAction="#openRiwayatPemeriksaan"/>
+                
+                <Button text="🩻 Rekam Medis" styleClass="menu-btn" onAction="#openRekamMedis"/>
                 <Button text="🧠 Prediksi ML" styleClass="menu-btn" onAction="#openPrediksi"/>
+                
                 <Label text="LAPORAN" styleClass="menu-group"/>
                 <Button text="📊 Hasil &amp; Riwayat" styleClass="menu-btn" onAction="#openHasilRiwayat"/>
                 <Button text="📈 Laporan Klinik" styleClass="menu-btn" onAction="#openLaporan"/>
+                
                 <Region VBox.vgrow="ALWAYS"/>
                 <Button text="🚪 Logout" styleClass="logout-btn"/>
             </VBox>
         </ScrollPane>
     </left>
+    
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="topbar">
             <VBox spacing="5">
@@ -44,6 +55,7 @@
                        onAction="#handleCariPasien"/>
         </HBox>
     </top>
+    
     <center>
         <VBox spacing="25">
             <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
@@ -82,7 +94,6 @@
                         <TableColumn fx:id="colUmur" text="Umur" prefWidth="80"/>
                         <TableColumn fx:id="colGender" text="Gender" prefWidth="120"/>
                         <TableColumn fx:id="colAlamat" text="Alamat" prefWidth="250"/>
-                        <!-- ✅ KOLOM AKSI DITAMBAHKAN DI SINI -->
                         <TableColumn fx:id="colAksi" text="Aksi" prefWidth="150"/>
                     </columns>
                     <columnResizePolicy>

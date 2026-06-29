@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.PemeriksaanController" stylesheets="@style.css">
+<top>
+    <VBox spacing="10" styleClass="top-panel">
+        <Label text="PEMERIKSAAN DOKTER (TANDA VITAL)" styleClass="title" maxWidth="Infinity" alignment="CENTER"/>
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="➕ Tambah Periksa" onAction="#handleTambah" styleClass="btn-tambah"/>
+            <Button text="🗑️ Hapus" onAction="#handleHapus" styleClass="btn-hapus"/>
+            <Button text="🔄 Refresh" onAction="#loadData" styleClass="btn-refresh"/>
+            <Button text="⬅️ Kembali" onAction="#handleBack" styleClass="btn-close"/>
+        </HBox>
+    </VBox>
+</top>
+<center>
+    <VBox spacing="15" styleClass="main-panel" VBox.vgrow="ALWAYS">
+        <TableView fx:id="tablePemeriksaan" VBox.vgrow="ALWAYS" maxWidth="Infinity">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="colPasien" text="Pasien" prefWidth="150"/>
+                <TableColumn fx:id="colDokter" text="Dokter" prefWidth="150"/>
+                <TableColumn fx:id="colTanggal" text="Tanggal" prefWidth="100"/>
+                <TableColumn fx:id="colTensi" text="Tensi" prefWidth="100"/>
+                <TableColumn fx:id="colSuhu" text="Suhu (°C)" prefWidth="80"/>
+                <TableColumn fx:id="colBB" text="BB (kg)" prefWidth="80"/>
+                <TableColumn fx:id="colTB" text="TB (cm)" prefWidth="80"/>
+                <TableColumn fx:id="colCatatan" text="Catatan" prefWidth="200"/>
+            </columns>
+            <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+        </TableView>
+    </VBox>
+</center>
+</BorderPane>

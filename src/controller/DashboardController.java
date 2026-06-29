@@ -211,4 +211,10 @@ public class DashboardController implements Initializable {
     private Stage getStage() {
         return (Stage) tableDashboard.getScene().getWindow();
     }
+    @FXML private void openPemeriksaan() {
+    SceneUtil.switchScene(getStage(), "/view/pemeriksaan.fxml");
+    }
+    @FXML private void openRiwayatPemeriksaan() {
+        SceneUtil.switchScene(getStage(), "/view/riwayat_pemeriksaan.fxml");
+    }
 }

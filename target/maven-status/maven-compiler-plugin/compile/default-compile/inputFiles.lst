@@ -6,6 +6,7 @@ D:\Tugas Semester 4\PBO\smartClinic\src\dao\PrediksiDAO.java
 D:\Tugas Semester 4\PBO\smartClinic\src\controller\DokterController.java
 D:\Tugas Semester 4\PBO\smartClinic\src\util\AlertUtil.java
 D:\Tugas Semester 4\PBO\smartClinic\src\dao\PendaftaranDAO.java
+D:\Tugas Semester 4\PBO\smartClinic\src\service\PemeriksaanService.java
 D:\Tugas Semester 4\PBO\smartClinic\src\service\PrediksiService.java
 D:\Tugas Semester 4\PBO\smartClinic\src\model\Obat.java
 D:\Tugas Semester 4\PBO\smartClinic\src\model\RekamMedis.java
@@ -15,6 +16,7 @@ D:\Tugas Semester 4\PBO\smartClinic\src\dao\ObatDAO.java
 D:\Tugas Semester 4\PBO\smartClinic\src\model\Pendaftaran.java
 D:\Tugas Semester 4\PBO\smartClinic\src\model\User.java
 D:\Tugas Semester 4\PBO\smartClinic\src\controller\PrediksiController.java
+D:\Tugas Semester 4\PBO\smartClinic\src\controller\RiwayatPemeriksaanController.java
 D:\Tugas Semester 4\PBO\smartClinic\src\model\Petugas.java
 D:\Tugas Semester 4\PBO\smartClinic\src\controller\RekamMedisController.java
 D:\Tugas Semester 4\PBO\smartClinic\src\controller\ObatController.java
@@ -24,11 +26,14 @@ D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormRekamMedisController.java
 D:\Tugas Semester 4\PBO\smartClinic\src\model\Klinik.java
 D:\Tugas Semester 4\PBO\smartClinic\src\model\Pemeriksaan.java
 D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormPasienController.java
+D:\Tugas Semester 4\PBO\smartClinic\src\controller\FormPemeriksaanController.java
 D:\Tugas Semester 4\PBO\smartClinic\src\controller\PasienController.java
 D:\Tugas Semester 4\PBO\smartClinic\src\dao\DokterDAO.java
+D:\Tugas Semester 4\PBO\smartClinic\src\dao\PemeriksaanDAO.java
 D:\Tugas Semester 4\PBO\smartClinic\src\model\Dokter.java
 D:\Tugas Semester 4\PBO\smartClinic\src\dao\PetugasDAO.java
 D:\Tugas Semester 4\PBO\smartClinic\src\service\PasienService.java
+D:\Tugas Semester 4\PBO\smartClinic\src\controller\PemeriksaanController.java
 D:\Tugas Semester 4\PBO\smartClinic\src\model\Person.java
 D:\Tugas Semester 4\PBO\smartClinic\src\service\ObatService.java
 D:\Tugas Semester 4\PBO\smartClinic\src\com\AppMain.java
