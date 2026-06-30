@@ -7,6 +7,12 @@ public class PemeriksaanService {
     private PemeriksaanDAO dao = new PemeriksaanDAO();
     public List<Pemeriksaan> getAll() { return dao.getAll(); }
     public List<Pemeriksaan> getByPasien(int id) { return dao.getByPasien(id); }
-    public boolean save(Pemeriksaan p) { return dao.insert(p); }
+    public boolean save(Pemeriksaan p) { 
+        boolean result = dao.insert(p);
+        if (result && p.getPasien() != null) {
+            new PendaftaranService().updateStatusByPasien(p.getPasien().getIdPasien(), "Menunggu", "Diperiksa");
+        }
+        return result;
+    }
     public boolean delete(int id) { return dao.delete(id); }
 }

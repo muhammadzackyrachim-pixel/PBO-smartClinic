@@ -16,7 +16,9 @@ import javafx.stage.Stage;
 import model.Pasien;
 import service.PasienService;
 import util.AlertUtil;
+import controller.DashboardController;
 import util.SceneUtil;
+import controller.DashboardController;
 
 public class PasienController implements Initializable {
     @FXML private TextField txtCari;
@@ -51,11 +53,10 @@ public class PasienController implements Initializable {
     @FXML public void handleTambah() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_pasien.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Tambah Pasien", 800, 500);
+            javafx.scene.Node node = loader.load();
             FormPasienController ctrl = loader.getController();
             ctrl.setModeTambah();
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
     }
 
@@ -64,11 +65,10 @@ public class PasienController implements Initializable {
         if (p == null) { AlertUtil.warning("Pilih data dulu!"); return; }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_pasien.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Edit Pasien", 800, 500);
+            javafx.scene.Node node = loader.load();
             FormPasienController ctrl = loader.getController();
             ctrl.setModeEdit(p);
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
     }
 

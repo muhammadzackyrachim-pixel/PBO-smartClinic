@@ -15,7 +15,9 @@ import javafx.stage.Stage;
 import model.Pendaftaran;
 import service.PendaftaranService;
 import util.AlertUtil;
+import controller.DashboardController;
 import util.SceneUtil;
+import controller.DashboardController;
 
 public class PendaftaranController implements Initializable {
     @FXML private TableView<Pendaftaran> tablePendaftaran;
@@ -45,11 +47,10 @@ public class PendaftaranController implements Initializable {
     @FXML public void handleTambah() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_pendaftaran.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Tambah Pendaftaran", 800, 400);
+            javafx.scene.Node node = loader.load();
             FormPendaftaranController ctrl = loader.getController();
             ctrl.setModeTambah();
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
     }
 

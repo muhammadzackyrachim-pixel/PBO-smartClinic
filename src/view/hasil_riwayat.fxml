@@ -12,12 +12,6 @@
                    maxWidth="Infinity"
                    alignment="CENTER"/>
             <HBox spacing="10" alignment="CENTER">
-                <Button text="🔄 Refresh"
-                        onAction="#loadData"
-                        styleClass="btn-refresh"/>
-                <Button text="⬅️ Kembali"
-                        onAction="#handleBack"
-                        styleClass="btn-close"/>
             </HBox>
         </VBox>
     </top>

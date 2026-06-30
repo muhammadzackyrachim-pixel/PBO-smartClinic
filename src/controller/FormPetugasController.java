@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import controller.DashboardController;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -16,7 +17,7 @@ public class FormPetugasController {
     private Petugas petugas;
 
     @FXML public void initialize() {
-        cbRole.getItems().addAll("Admin", "Perawat", "Staff");
+        cbRole.getItems().addAll("Admin", "Petugas", "Dokter");
     }
 
     public void setModeTambah() {
@@ -45,11 +46,11 @@ public class FormPetugasController {
 
         if (service.save(petugas)) {
             AlertUtil.success("Data disimpan");
-            ((Stage) txtNama.getScene().getWindow()).close();
+            DashboardController.getInstance().setCenterContent("/view/petugas.fxml");
         }
     }
 
     @FXML private void handleBatal() {
-        ((Stage) txtNama.getScene().getWindow()).close();
+        DashboardController.getInstance().setCenterContent("/view/petugas.fxml");
     }
 }

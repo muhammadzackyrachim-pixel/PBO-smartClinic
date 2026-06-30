@@ -28,9 +28,6 @@
             onAction="#handleHapus"
             styleClass="btn-hapus"/>
     
-    <Button text="🔄 Refresh"
-            onAction="#loadData"
-            styleClass="btn-refresh"/>
     
     <TextField fx:id="txtCari"
                promptText="Cari pasien..."
@@ -40,9 +37,6 @@
             onAction="#handleCari"
             styleClass="btn-cari"/>
     
-    <Button text="⬅️ Kembali"
-            onAction="#handleBack"
-            styleClass="btn-close"/>
 </HBox>
         </VBox>
     </top>

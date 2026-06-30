@@ -11,5 +11,6 @@ public class PendaftaranService {
     public List<Pendaftaran> getAll() { return dao.getAll(); }
     public boolean save(Pendaftaran p) { return dao.insert(p); }
     public boolean updateStatus(int id, String status) { return dao.updateStatus(id, status); }
+    public boolean updateStatusByPasien(int pasienId, String currentStatus, String newStatus) { return dao.updateStatusByPasien(pasienId, currentStatus, newStatus); }
     public int getTotal() { return dao.getTotal(); }
 }

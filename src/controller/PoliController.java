@@ -15,7 +15,9 @@ import javafx.stage.Stage;
 import model.Poli;
 import service.PoliService;
 import util.AlertUtil;
+import controller.DashboardController;
 import util.SceneUtil;
+import controller.DashboardController;
 
 public class PoliController implements Initializable {
     @FXML private TableView<Poli> tablePoli;
@@ -42,11 +44,10 @@ public class PoliController implements Initializable {
     @FXML public void handleTambah() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_poli.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Tambah Poli", 600, 300);
+            javafx.scene.Node node = loader.load();
             FormPoliController ctrl = loader.getController();
             ctrl.setModeTambah();
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) {
             AlertUtil.error("Gagal buka form: " + e.getMessage());
             e.printStackTrace();
@@ -61,11 +62,10 @@ public class PoliController implements Initializable {
         }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_poli.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Edit Poli", 600, 300);
+            javafx.scene.Node node = loader.load();
             FormPoliController ctrl = loader.getController();
             ctrl.setModeEdit(selected);
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) {
             AlertUtil.error("Gagal buka form: " + e.getMessage());
             e.printStackTrace();

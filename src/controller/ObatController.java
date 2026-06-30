@@ -15,7 +15,9 @@ import javafx.stage.Stage;
 import model.Obat;
 import service.ObatService;
 import util.AlertUtil;
+import controller.DashboardController;
 import util.SceneUtil;
+import controller.DashboardController;
 
 public class ObatController implements Initializable {
     @FXML private TableView<Obat> tableObat;
@@ -46,11 +48,10 @@ public class ObatController implements Initializable {
     @FXML public void handleTambah() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_obat.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Tambah Obat", 800, 400);
+            javafx.scene.Node node = loader.load();
             FormObatController ctrl = loader.getController();
             ctrl.setModeTambah();
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
     }
 
@@ -59,11 +60,10 @@ public class ObatController implements Initializable {
         if (o == null) { AlertUtil.warning("Pilih data dulu!"); return; }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_obat.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Edit Obat", 800, 400);
+            javafx.scene.Node node = loader.load();
             FormObatController ctrl = loader.getController();
             ctrl.setModeEdit(o);
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
     }
 

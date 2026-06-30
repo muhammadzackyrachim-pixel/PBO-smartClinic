@@ -1,12 +1,14 @@
 package controller;
 import java.time.LocalDate;
 import javafx.fxml.FXML;
+import controller.DashboardController;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.*;
 import service.*;
 import util.AlertUtil;
 import util.ValidationUtil;
+import util.AutoCompleteUtil;
 
 public class FormPemeriksaanController {
     @FXML private ComboBox<Pasien> cbPasien;
@@ -20,6 +22,10 @@ public class FormPemeriksaanController {
     @FXML public void initialize() {
         cbPasien.getItems().addAll(new PasienService().getAll());
         cbDokter.getItems().addAll(new DokterService().getAll());
+        
+        AutoCompleteUtil.setup(cbPasien);
+        AutoCompleteUtil.setup(cbDokter);
+        
         dpTanggal.setValue(LocalDate.now());
     }
 
@@ -40,12 +46,12 @@ public class FormPemeriksaanController {
 
             if (service.save(p)) {
                 AlertUtil.success("Data pemeriksaan disimpan!");
-                ((Stage) cbPasien.getScene().getWindow()).close();
+                DashboardController.getInstance().setCenterContent("/view/pemeriksaan.fxml");
             }
         } catch (NumberFormatException e) {
             AlertUtil.error("Input Suhu, BB, dan TB harus berupa angka!");
         }
     }
 
-    @FXML private void handleBatal() { ((Stage) cbPasien.getScene().getWindow()).close(); }
+    @FXML private void handleBatal() { DashboardController.getInstance().setCenterContent("/view/pemeriksaan.fxml"); }
 }

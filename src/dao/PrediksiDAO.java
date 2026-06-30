@@ -17,7 +17,7 @@ public class PrediksiDAO {
     public List<Prediksi> getAll() {
         List<Prediksi> list = new ArrayList<>();
         String sql = "SELECT pr.*, pas.nama as nama_pasien FROM prediksi pr " +
-                     "LEFT JOIN pasien pas ON pr.pasien_id = pas.id ORDER BY pr.id DESC";
+                     "LEFT JOIN pasien pas ON pr.pasien_id = pas.id ORDER BY pr.id ASC";
         try (Connection conn = DBConnection.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {

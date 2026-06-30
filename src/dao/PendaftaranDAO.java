@@ -18,11 +18,11 @@ public class PendaftaranDAO {
 
     public List<Pendaftaran> getAll() {
         List<Pendaftaran> list = new ArrayList<>();
-        String sql = "SELECT p.*, pas.nama as nama_pasien, dok.nama as nama_dokter " +
+        String sql = "SELECT p.*, pas.nama as nama_pasien, pas.umur as umur_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter " +
                      "FROM pendaftaran p " +
                      "LEFT JOIN pasien pas ON p.pasien_id = pas.id " +
                      "LEFT JOIN dokter dok ON p.dokter_id = dok.id " +
-                     "ORDER BY p.id DESC";
+                     "ORDER BY p.id ASC";
         try (Connection conn = DBConnection.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -37,6 +37,9 @@ public class PendaftaranDAO {
                 Pasien pasien = new Pasien();
                 pasien.setIdPasien(rs.getInt("pasien_id"));
                 pasien.setNama(rs.getString("nama_pasien"));
+                pasien.setUmur(rs.getInt("umur_pasien"));
+                pasien.setGender(rs.getString("gender_pasien"));
+                pasien.setAlamat(rs.getString("alamat_pasien"));
                 p.setPasien(pasien);
                 
                 Dokter dokter = new Dokter();
@@ -75,6 +78,20 @@ public class PendaftaranDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, status);
             ps.setInt(2, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateStatusByPasien(int pasienId, String currentStatus, String newStatus) {
+        String sql = "UPDATE pendaftaran SET status=? WHERE pasien_id=? AND status=?";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newStatus);
+            ps.setInt(2, pasienId);
+            ps.setString(3, currentStatus);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();

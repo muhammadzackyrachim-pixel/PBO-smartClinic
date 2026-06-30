@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import controller.DashboardController;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -50,13 +51,13 @@ public class FormPasienController {
 
         if (service.save(pasien)) {
             AlertUtil.success("Data disimpan");
-            ((Stage) txtNama.getScene().getWindow()).close();
+            DashboardController.getInstance().setCenterContent("/view/pasien.fxml");
         } else {
             AlertUtil.error("Gagal menyimpan");
         }
     }
 
     @FXML private void handleBatal() {
-        ((Stage) txtNama.getScene().getWindow()).close();
+        DashboardController.getInstance().setCenterContent("/view/pasien.fxml");
     }
 }

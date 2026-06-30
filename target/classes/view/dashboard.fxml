@@ -3,39 +3,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
+<BorderPane fx:id="mainPane" xmlns:fx="http://javafx.com/fxml"
             fx:controller="controller.DashboardController"
             stylesheets="@style.css"
             styleClass="root-dashboard">
     <left>
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="sidebar-scroll">
+        <ScrollPane fx:id="sidebarContainer" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" styleClass="sidebar-scroll">
             <VBox spacing="5" alignment="TOP_CENTER" prefWidth="240" styleClass="sidebar">
                 <Label text="SMART CLINIC" styleClass="logo-title"/>
+                <Label fx:id="lblCurrentUser" text="Login sebagai: -" style="-fx-text-fill: #94a3b8; -fx-font-size: 11px; -fx-padding: 0 0 10 0;"/>
                 <Separator prefWidth="180"/>
-                <Button text="🏠 Dashboard" styleClass="menu-btn"/>
-                <Label text="MASTER DATA" styleClass="menu-group"/>
-                <Button text="👨‍⚕ Pasien" styleClass="menu-btn" onAction="#openPasien"/>
-                <Button text="🩺 Dokter" styleClass="menu-btn" onAction="#openDokter"/>
-                <Button text="👩‍💼 Petugas" styleClass="menu-btn" onAction="#openPetugas"/>
-                <Button text="💊 Obat" styleClass="menu-btn" onAction="#openObat"/>
-                <Button text="🏥 Poli" styleClass="menu-btn" onAction="#openPoli"/>
+                <Button fx:id="btnDashboard" text="🏠 Dashboard" styleClass="menu-btn, active-menu-btn" onAction="#openDashboard"/>
+                <Label fx:id="lblMasterData" text="MASTER DATA" styleClass="menu-group"/>
+                <Button fx:id="btnPasien" text="👨‍⚕ Pasien" styleClass="menu-btn" onAction="#openPasien"/>
+                <Button fx:id="btnDokter" text="🩺 Dokter" styleClass="menu-btn" onAction="#openDokter"/>
+                <Button fx:id="btnPetugas" text="👩‍💼 Petugas" styleClass="menu-btn" onAction="#openPetugas"/>
+                <Button fx:id="btnObat" text="💊 Obat" styleClass="menu-btn" onAction="#openObat"/>
+                <Button fx:id="btnPoli" text="🏥 Poli" styleClass="menu-btn" onAction="#openPoli"/>
                 
-                <Label text="TRANSAKSI" styleClass="menu-group"/>
-                <Button text="📝 Pendaftaran" styleClass="menu-btn" onAction="#openPendaftaran"/>
+                <Label fx:id="lblTransaksi" text="TRANSAKSI" styleClass="menu-group"/>
+                <Button fx:id="btnPendaftaran" text="📝 Pendaftaran" styleClass="menu-btn" onAction="#openPendaftaran"/>
                 
                 <!-- ✅ MENU BARU: PEMERIKSAAN DOKTER -->
-                <Button text="🩺 Pemeriksaan Dokter" styleClass="menu-btn" onAction="#openPemeriksaan"/>
+                <Button fx:id="btnPemeriksaan" text="🩺 Pemeriksaan Dokter" styleClass="menu-btn" onAction="#openPemeriksaan"/>
                 
                 <!-- ✅ MENU BARU: RIWAYAT PEMERIKSAAN -->
-                <Button text="📜 Riwayat Periksa" styleClass="menu-btn" onAction="#openRiwayatPemeriksaan"/>
+                <Button fx:id="btnRiwayatPemeriksaan" text="📜 Riwayat Periksa" styleClass="menu-btn" onAction="#openRiwayatPemeriksaan"/>
                 
-                <Button text="🩻 Rekam Medis" styleClass="menu-btn" onAction="#openRekamMedis"/>
-                <Button text="📋 Input Resep" styleClass="menu-btn" onAction="#openResepObat"/>
-                <Button text="🧠 Prediksi ML" styleClass="menu-btn" onAction="#openPrediksi"/>
+                <Button fx:id="btnRekamMedis" text="🩻 Rekam Medis" styleClass="menu-btn" onAction="#openRekamMedis"/>
+                <Button fx:id="btnPrediksi" text="🧠 Prediksi ML" styleClass="menu-btn" onAction="#openPrediksi" style="-fx-background-color: #111827; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-color: #6366f1; -fx-border-width: 2px; -fx-border-radius: 6px; -fx-background-radius: 6px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 4);"/>
                 
-                <Label text="LAPORAN" styleClass="menu-group"/>
-                <Button text="📊 Hasil &amp; Riwayat" styleClass="menu-btn" onAction="#openHasilRiwayat"/>
-                <Button text="📈 Laporan Klinik" styleClass="menu-btn" onAction="#openLaporan"/>
+                <Label fx:id="lblLaporan" text="LAPORAN" styleClass="menu-group"/>
+                <Button fx:id="btnHasilRiwayat" text="📊 Hasil &amp; Riwayat" styleClass="menu-btn" onAction="#openHasilRiwayat"/>
+                <Button fx:id="btnLaporan" text="📈 Laporan Klinik" styleClass="menu-btn" onAction="#openLaporan"/>
                 
                 <Region VBox.vgrow="ALWAYS"/>
                 <Button text="🚪 Logout" styleClass="logout-btn" onAction="#handleLogout"/>
@@ -45,6 +45,7 @@
     
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="topbar">
+            <Button text="☰" onAction="#toggleSidebar" style="-fx-background-color: transparent; -fx-font-size: 24px; -fx-cursor: hand; -fx-text-fill: #0f172a;"/>
             <VBox spacing="5">
                 <Label text="Dashboard" styleClass="dashboard-title"/>
                 <Label text="Selamat Datang di Smart Clinic System" styleClass="dashboard-subtitle"/>

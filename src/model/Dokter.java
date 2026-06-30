@@ -34,6 +34,9 @@ public class Dokter {
 
     @Override
     public String toString() {
+        if (spesialisasi == null || spesialisasi.trim().isEmpty() || spesialisasi.equalsIgnoreCase("null")) {
+            return nama;
+        }
         return nama + " (" + spesialisasi + ")";
     }
 }

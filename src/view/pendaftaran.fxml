@@ -15,12 +15,6 @@
                 <Button text="➕ Tambah"
                         onAction="#handleTambah"
                         styleClass="btn-tambah"/>
-                <Button text="🔄 Refresh"
-                        onAction="#loadData"
-                        styleClass="btn-refresh"/>
-                <Button text="⬅️ Kembali"
-                        onAction="#handleBack"
-                        styleClass="btn-close"/>
             </HBox>
         </VBox>
     </top>

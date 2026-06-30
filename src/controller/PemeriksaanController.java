@@ -12,7 +12,9 @@ import javafx.stage.Stage;
 import model.Pemeriksaan;
 import service.PemeriksaanService;
 import util.AlertUtil;
+import controller.DashboardController;
 import util.SceneUtil;
+import controller.DashboardController;
 
 public class PemeriksaanController implements Initializable {
     @FXML private TableView<Pemeriksaan> tablePemeriksaan;
@@ -42,11 +44,7 @@ public class PemeriksaanController implements Initializable {
     }
 
     @FXML public void handleTambah() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_pemeriksaan.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Tambah Pemeriksaan", 800, 550);
-            stage.showAndWait(); loadData();
-        } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
+        DashboardController.getInstance().setCenterContent("/view/form_pemeriksaan.fxml");
     }
 
     @FXML public void handleHapus() {

@@ -18,7 +18,9 @@ import model.RekamMedis;
 import model.ResepObat;
 import service.ResepObatService;
 import util.AlertUtil;
+import controller.DashboardController;
 import util.SceneUtil;
+import controller.DashboardController;
 
 public class ResepObatController implements Initializable {
     @FXML private Label lblInfo;
@@ -96,6 +98,6 @@ public class ResepObatController implements Initializable {
     }
 
     @FXML public void handleBack() {
-        SceneUtil.switchScene((Stage) tableResep.getScene().getWindow(), "/view/rekam_medis.fxml");
+        controller.DashboardController.getInstance().setCenterContent("/view/rekam_medis.fxml");
     }
 }

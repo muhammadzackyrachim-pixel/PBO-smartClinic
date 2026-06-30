@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import javafx.fxml.FXML;
+import controller.DashboardController;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -16,21 +17,25 @@ import service.PasienService;
 import service.PendaftaranService;
 import util.AlertUtil;
 import util.ValidationUtil;
+import util.AutoCompleteUtil;
 
 public class FormPendaftaranController {
     @FXML private ComboBox<Pasien> cbPasien;
     @FXML private ComboBox<Dokter> cbDokter;
     @FXML private DatePicker dpTanggal;
     @FXML private TextField txtWaktu, txtKeluhan;
-    @FXML private ComboBox<String> cbStatus;
 
     private PendaftaranService service = new PendaftaranService();
     private Pendaftaran pendaftaran;
+    private java.util.List<Pasien> allPasien;
 
     @FXML public void initialize() {
         cbPasien.getItems().addAll(new PasienService().getAll());
         cbDokter.getItems().addAll(new DokterService().getAll());
-        cbStatus.getItems().addAll("Menunggu", "Diperiksa", "Selesai");
+        
+        AutoCompleteUtil.setup(cbPasien);
+        AutoCompleteUtil.setup(cbDokter);
+        
         dpTanggal.setValue(LocalDate.now());
     }
 
@@ -38,7 +43,6 @@ public class FormPendaftaranController {
         pendaftaran = new Pendaftaran();
         txtWaktu.setText(LocalTime.now().toString().substring(0, 5));
         txtKeluhan.clear();
-        cbStatus.setValue("Menunggu");
     }
 
     @FXML private void handleSimpan() {
@@ -50,15 +54,15 @@ public class FormPendaftaranController {
         pendaftaran.setTanggalDaftar(dpTanggal.getValue());
         pendaftaran.setWaktuDaftar(LocalTime.parse(txtWaktu.getText() + ":00"));
         pendaftaran.setKeluhan(txtKeluhan.getText());
-        pendaftaran.setStatus(cbStatus.getValue());
+        pendaftaran.setStatus("Menunggu");
 
         if (service.save(pendaftaran)) {
             AlertUtil.success("Data disimpan");
-            ((Stage) cbPasien.getScene().getWindow()).close();
+            DashboardController.getInstance().setCenterContent("/view/pendaftaran.fxml");
         }
     }
 
     @FXML private void handleBatal() {
-        ((Stage) cbPasien.getScene().getWindow()).close();
+        DashboardController.getInstance().setCenterContent("/view/pendaftaran.fxml");
     }
 }

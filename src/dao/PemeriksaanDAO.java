@@ -9,7 +9,7 @@ public class PemeriksaanDAO {
     public List<Pemeriksaan> getAll() {
         List<Pemeriksaan> list = new ArrayList<>();
         String sql = "SELECT p.*, pas.nama as nama_pasien, dok.nama as nama_dokter FROM pemeriksaan p " +
-                     "LEFT JOIN pasien pas ON p.pasien_id = pas.id LEFT JOIN dokter dok ON p.dokter_id = dok.id ORDER BY p.id DESC";
+                     "LEFT JOIN pasien pas ON p.pasien_id = pas.id LEFT JOIN dokter dok ON p.dokter_id = dok.id ORDER BY p.id ASC";
         try (Connection conn = DBConnection.connect(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Pemeriksaan p = new Pemeriksaan();
@@ -33,7 +33,7 @@ public class PemeriksaanDAO {
 
     public List<Pemeriksaan> getByPasien(int pasienId) {
         List<Pemeriksaan> list = new ArrayList<>();
-        String sql = "SELECT * FROM pemeriksaan WHERE pasien_id = ? ORDER BY tanggal_periksa DESC";
+        String sql = "SELECT * FROM pemeriksaan WHERE pasien_id = ? ORDER BY tanggal_periksa ASC";
         try (Connection conn = DBConnection.connect(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, pasienId);
             ResultSet rs = ps.executeQuery();

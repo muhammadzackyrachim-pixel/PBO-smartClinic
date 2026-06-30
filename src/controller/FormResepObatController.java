@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import controller.DashboardController;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -67,7 +68,7 @@ public class FormResepObatController {
 
         if (resepService.save(resep)) {
             AlertUtil.success("Resep obat berhasil disimpan!");
-            ((Stage) cbObat.getScene().getWindow()).close();
+            DashboardController.getInstance().setCenterContent("/view/resep_obat.fxml");
         } else {
             AlertUtil.error("Gagal menyimpan resep! Periksa stok obat.");
         }
@@ -75,6 +76,6 @@ public class FormResepObatController {
 
     @FXML
     private void handleBatal() {
-        ((Stage) cbObat.getScene().getWindow()).close();
+        DashboardController.getInstance().setCenterContent("/view/resep_obat.fxml");
     }
 }

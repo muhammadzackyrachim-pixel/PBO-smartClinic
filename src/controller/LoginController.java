@@ -30,6 +30,7 @@ public class LoginController {
         Petugas petugas = petugasDAO.login(username, password);
 
         if (petugas != null) {
+            util.SessionUtil.setCurrentUser(petugas);
             lblError.setText("");
             Stage stage = (Stage) txtUsername.getScene().getWindow();
             SceneUtil.switchScene(stage, "/view/dashboard.fxml");

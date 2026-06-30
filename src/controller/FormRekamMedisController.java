@@ -3,6 +3,7 @@ package controller;
 import java.time.LocalDate;
 
 import javafx.fxml.FXML;
+import controller.DashboardController;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
@@ -17,6 +18,7 @@ import service.PendaftaranService;
 import service.RekamMedisService;
 import util.AlertUtil;
 import util.ValidationUtil;
+import util.AutoCompleteUtil;
 
 public class FormRekamMedisController {
     @FXML private ComboBox<Pendaftaran> cbPendaftaran;
@@ -32,6 +34,11 @@ public class FormRekamMedisController {
         cbPendaftaran.getItems().addAll(new PendaftaranService().getAll());
         cbPasien.getItems().addAll(new PasienService().getAll());
         cbDokter.getItems().addAll(new DokterService().getAll());
+        
+        AutoCompleteUtil.setup(cbPendaftaran);
+        AutoCompleteUtil.setup(cbPasien);
+        AutoCompleteUtil.setup(cbDokter);
+        
         dpTanggal.setValue(LocalDate.now());
         
         // Listener to autofill pasien and dokter if a pendaftaran is selected
@@ -76,11 +83,11 @@ public class FormRekamMedisController {
 
         if (service.save(rekamMedis)) {
             AlertUtil.success("Data disimpan");
-            ((Stage) cbPasien.getScene().getWindow()).close();
+            DashboardController.getInstance().setCenterContent("/view/rekam_medis.fxml");
         }
     }
 
     @FXML private void handleBatal() {
-        ((Stage) cbPasien.getScene().getWindow()).close();
+        DashboardController.getInstance().setCenterContent("/view/rekam_medis.fxml");
     }
 }

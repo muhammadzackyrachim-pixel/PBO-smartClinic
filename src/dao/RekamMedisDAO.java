@@ -17,11 +17,11 @@ public class RekamMedisDAO {
 
     public List<RekamMedis> getAll() {
         List<RekamMedis> list = new ArrayList<>();
-        String sql = "SELECT rm.*, pas.nama as nama_pasien, dok.nama as nama_dokter " +
+        String sql = "SELECT rm.*, pas.nama as nama_pasien, pas.umur as umur_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter, dok.spesialisasi as spesialisasi_dokter " +
                      "FROM rekam_medis rm " +
                      "LEFT JOIN pasien pas ON rm.pasien_id = pas.id " +
                      "LEFT JOIN dokter dok ON rm.dokter_id = dok.id " +
-                     "ORDER BY rm.id DESC";
+                     "ORDER BY rm.id ASC";
         try (Connection conn = DBConnection.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -36,14 +36,67 @@ public class RekamMedisDAO {
                 Pasien pasien = new Pasien();
                 pasien.setIdPasien(rs.getInt("pasien_id"));
                 pasien.setNama(rs.getString("nama_pasien"));
+                pasien.setUmur(rs.getInt("umur_pasien"));
+                pasien.setGender(rs.getString("gender_pasien"));
+                pasien.setAlamat(rs.getString("alamat_pasien"));
                 rm.setPasien(pasien);
                 
                 Dokter dokter = new Dokter();
                 dokter.setIdDokter(rs.getInt("dokter_id"));
                 dokter.setNama(rs.getString("nama_dokter"));
+                dokter.setSpesialisasi(rs.getString("spesialisasi_dokter"));
                 rm.setDokter(dokter);
                 
                 list.add(rm);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<RekamMedis> getAllPaginated(int limit, int offset, String keyword) {
+        List<RekamMedis> list = new ArrayList<>();
+        String sql = "SELECT rm.*, pas.nama as nama_pasien, pas.umur as umur_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter, dok.spesialisasi as spesialisasi_dokter " +
+                     "FROM rekam_medis rm " +
+                     "LEFT JOIN pasien pas ON rm.pasien_id = pas.id " +
+                     "LEFT JOIN dokter dok ON rm.dokter_id = dok.id " +
+                     "WHERE pas.nama LIKE ? " +
+                     "ORDER BY rm.id ASC LIMIT ? OFFSET ?";
+                     
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            String searchPattern = "%" + (keyword == null ? "" : keyword) + "%";
+            ps.setString(1, searchPattern);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    RekamMedis rm = new RekamMedis();
+                    rm.setIdRekamMedis(rs.getInt("id"));
+                    rm.setTanggalPeriksa(rs.getDate("tanggal_periksa") != null ? rs.getDate("tanggal_periksa").toLocalDate() : null);
+                    rm.setDiagnosis(rs.getString("diagnosis"));
+                    rm.setTindakan(rs.getString("tindakan"));
+                    rm.setCatatan(rs.getString("catatan"));
+                    
+                    Pasien pasien = new Pasien();
+                    pasien.setIdPasien(rs.getInt("pasien_id"));
+                    pasien.setNama(rs.getString("nama_pasien"));
+                    pasien.setUmur(rs.getInt("umur_pasien"));
+                    pasien.setGender(rs.getString("gender_pasien"));
+                    pasien.setAlamat(rs.getString("alamat_pasien"));
+                    rm.setPasien(pasien);
+                    
+                    Dokter dokter = new Dokter();
+                    dokter.setIdDokter(rs.getInt("dokter_id"));
+                    dokter.setNama(rs.getString("nama_dokter"));
+                    dokter.setSpesialisasi(rs.getString("spesialisasi_dokter"));
+                    rm.setDokter(dokter);
+                    
+                    list.add(rm);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,6 +129,25 @@ public class RekamMedisDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
             if (rs.next()) {
                 return rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getTotal(String keyword) {
+        String sql = "SELECT COUNT(*) as total FROM rekam_medis rm " +
+                     "LEFT JOIN pasien pas ON rm.pasien_id = pas.id " +
+                     "WHERE pas.nama LIKE ?";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            String searchPattern = "%" + (keyword == null ? "" : keyword) + "%";
+            ps.setString(1, searchPattern);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

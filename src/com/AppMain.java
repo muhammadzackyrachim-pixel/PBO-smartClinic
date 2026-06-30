@@ -11,7 +11,7 @@ public class AppMain extends Application {
         Scene scene = new Scene(root, 900, 600);
         scene.getStylesheets().add(getClass().getResource("/view/style.css").toExternalForm());
         
-        stage.setTitle("Smart Clinic - Login");
+        stage.setTitle("Smart Clinic");
         stage.setScene(scene);
         stage.show();
     }

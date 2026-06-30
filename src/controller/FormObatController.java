@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import controller.DashboardController;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Obat;
@@ -37,11 +38,11 @@ public class FormObatController {
 
         if (service.save(obat)) {
             AlertUtil.success("Data disimpan");
-            ((Stage) txtNama.getScene().getWindow()).close();
+            DashboardController.getInstance().setCenterContent("/view/obat.fxml");
         }
     }
 
     @FXML private void handleBatal() {
-        ((Stage) txtNama.getScene().getWindow()).close();
+        DashboardController.getInstance().setCenterContent("/view/obat.fxml");
     }
 }

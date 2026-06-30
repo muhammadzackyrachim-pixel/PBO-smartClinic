@@ -6,6 +6,10 @@
     -fx-background-color: #f4f6f9;
 }
 
+.label {
+    -fx-text-fill: #000000;
+}
+
 /* =========================================
    SIDEBAR
    ========================================= */
@@ -430,4 +434,10 @@
     -fx-text-fill: #ef4444;
     -fx-font-size: 13px;
     -fx-font-weight: bold;
+}
+.active-menu-btn {
+    -fx-background-color: #334155;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 0 0 0 4;
 }

@@ -18,12 +18,16 @@
                 <Button text="📋 Input Resep"
                         onAction="#handleInputResep"
                         styleClass="btn-edit"/>
-                <Button text="🔄 Refresh"
-                        onAction="#loadData"
-                        styleClass="btn-refresh"/>
-                <Button text="⬅️ Kembali"
-                        onAction="#handleBack"
-                        styleClass="btn-close"/>
+                <Button text="🖨️ Cetak Surat Sakit"
+                        onAction="#handleCetakSurat"
+                        styleClass="btn-tambah"
+                        style="-fx-background-color: #0f172a;"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="txtSearch" 
+                           promptText="🔍 Ketik nama pasien..." 
+                           styleClass="text-field" 
+                           prefWidth="350"/>
             </HBox>
         </VBox>
     </top>
@@ -44,6 +48,11 @@
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                 </columnResizePolicy>
             </TableView>
+            <HBox alignment="CENTER" spacing="15" prefHeight="50">
+                <Button fx:id="btnPrev" text="◀ Sebelumnya" onAction="#handlePrevPage" style="-fx-background-color: white; -fx-text-fill: #334155; -fx-border-color: #cbd5e1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8 15; -fx-cursor: hand;"/>
+                <Label fx:id="lblHalaman" text="Halaman 1 / 1" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #334155;"/>
+                <Button fx:id="btnNext" text="Selanjutnya ▶" onAction="#handleNextPage" style="-fx-background-color: white; -fx-text-fill: #334155; -fx-border-color: #cbd5e1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 8 15; -fx-cursor: hand;"/>
+            </HBox>
         </VBox>
     </center>
 </BorderPane>

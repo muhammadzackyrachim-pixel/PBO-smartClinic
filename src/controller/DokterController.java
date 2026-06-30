@@ -15,7 +15,9 @@ import javafx.stage.Stage;
 import model.Dokter;
 import service.DokterService;
 import util.AlertUtil;
+import controller.DashboardController;
 import util.SceneUtil;
+import controller.DashboardController;
 
 public class DokterController implements Initializable {
     @FXML private TableView<Dokter> tableDokter;
@@ -44,11 +46,10 @@ public class DokterController implements Initializable {
     @FXML public void handleTambah() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_dokter.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Tambah Dokter", 800, 400);
+            javafx.scene.Node node = loader.load();
             FormDokterController ctrl = loader.getController();
             ctrl.setModeTambah();
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
     }
 
@@ -57,11 +58,10 @@ public class DokterController implements Initializable {
         if (d == null) { AlertUtil.warning("Pilih data dulu!"); return; }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_dokter.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Edit Dokter", 800, 400);
+            javafx.scene.Node node = loader.load();
             FormDokterController ctrl = loader.getController();
             ctrl.setModeEdit(d);
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
     }
 

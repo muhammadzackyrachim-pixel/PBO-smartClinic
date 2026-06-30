@@ -10,6 +10,7 @@
         </VBox>
     </top>
     <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 30 50 50 50;">
         <VBox alignment="CENTER" spacing="25">
             <padding><Insets top="10" right="30" bottom="20" left="30"/></padding>
             <GridPane alignment="CENTER" hgap="20" vgap="18">
@@ -30,5 +31,6 @@
                 <Button text="✖ Batal" onAction="#handleBatal" styleClass="btn-cancel" prefHeight="40"/>
             </HBox>
         </VBox>
+        </ScrollPane>
     </center>
 </BorderPane>

@@ -12,7 +12,9 @@ import javafx.stage.Stage;
 import model.Petugas;
 import service.PetugasService;
 import util.AlertUtil;
+import controller.DashboardController;
 import util.SceneUtil;
+import controller.DashboardController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -44,11 +46,10 @@ public class PetugasController implements Initializable {
     @FXML public void handleTambah() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_petugas.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Tambah Petugas", 800, 400);
+            javafx.scene.Node node = loader.load();
             FormPetugasController ctrl = loader.getController();
             ctrl.setModeTambah();
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
     }
 
@@ -57,11 +58,10 @@ public class PetugasController implements Initializable {
         if (p == null) { AlertUtil.warning("Pilih data dulu!"); return; }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_petugas.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Edit Petugas", 800, 400);
+            javafx.scene.Node node = loader.load();
             FormPetugasController ctrl = loader.getController();
             ctrl.setModeEdit(p);
-            stage.showAndWait();
-            loadData();
+            DashboardController.getInstance().setCenterContent(node);
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
     }
 

@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import controller.DashboardController;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Poli;
@@ -43,7 +44,7 @@ public class FormPoliController {
 
         if (service.save(poli)) {
             AlertUtil.success("Data poli berhasil disimpan!");
-            ((Stage) txtNamaPoli.getScene().getWindow()).close();
+            DashboardController.getInstance().setCenterContent("/view/poli.fxml");
         } else {
             AlertUtil.error("Gagal menyimpan data poli!");
         }
@@ -51,6 +52,6 @@ public class FormPoliController {
 
     @FXML
     private void handleBatal() {
-        ((Stage) txtNamaPoli.getScene().getWindow()).close();
+        DashboardController.getInstance().setCenterContent("/view/poli.fxml");
     }
 }

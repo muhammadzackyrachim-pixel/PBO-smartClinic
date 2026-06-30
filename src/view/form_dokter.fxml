@@ -10,7 +10,8 @@
         </VBox>
     </top>
     <center>
-        <VBox alignment="CENTER" spacing="25">
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 30 50 50 50;">
+            <VBox alignment="CENTER" spacing="25">
             <padding><Insets top="10" right="30" bottom="20" left="30"/></padding>
             <GridPane alignment="CENTER" hgap="20" vgap="18">
                 <columnConstraints>
@@ -19,7 +20,7 @@
                 </columnConstraints>
                 <Label text="ID"/><TextField fx:id="txtId" editable="false" prefWidth="220" GridPane.columnIndex="1"/>
                 <Label text="Nama" GridPane.rowIndex="1"/><TextField fx:id="txtNama" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <Label text="Spesialisasi" GridPane.rowIndex="2"/><TextField fx:id="txtSpesialisasi" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="Spesialisasi (Poli)" GridPane.rowIndex="2"/><ComboBox fx:id="cbSpesialisasi" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                 <Label text="No HP" GridPane.rowIndex="3"/><TextField fx:id="txtNoHP" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                 <Label text="Email" GridPane.rowIndex="4"/><TextField fx:id="txtEmail" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
             </GridPane>
@@ -28,5 +29,6 @@
                 <Button text="✖ Batal" onAction="#handleBatal" styleClass="btn-cancel" prefHeight="40"/>
             </HBox>
         </VBox>
+        </ScrollPane>
     </center>
 </BorderPane>

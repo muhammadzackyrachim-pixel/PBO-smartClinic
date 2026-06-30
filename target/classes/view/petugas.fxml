@@ -21,12 +21,6 @@
                 <Button text="🗑️ Hapus"
                         onAction="#handleHapus"
                         styleClass="btn-hapus"/>
-                <Button text="🔄 Refresh"
-                        onAction="#loadData"
-                        styleClass="btn-refresh"/>
-                <Button text="⬅️ Kembali"
-                        onAction="#handleBack"
-                        styleClass="btn-close"/>
             </HBox>
         </VBox>
     </top>

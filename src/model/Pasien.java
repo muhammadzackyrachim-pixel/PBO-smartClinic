@@ -53,6 +53,6 @@ public class Pasien {
 
     @Override
     public String toString() {
-        return nama + " (Umur: " + umur + ")";
+        return "RM-" + idPasien + " | " + nama + " (" + gender + ", " + umur + " th) - " + alamat;
     }
 }
