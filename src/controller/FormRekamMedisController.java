@@ -9,14 +9,17 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import model.Dokter;
 import model.Pasien;
+import model.Pendaftaran;
 import model.RekamMedis;
 import service.DokterService;
 import service.PasienService;
+import service.PendaftaranService;
 import service.RekamMedisService;
 import util.AlertUtil;
 import util.ValidationUtil;
 
 public class FormRekamMedisController {
+    @FXML private ComboBox<Pendaftaran> cbPendaftaran;
     @FXML private ComboBox<Pasien> cbPasien;
     @FXML private ComboBox<Dokter> cbDokter;
     @FXML private DatePicker dpTanggal;
@@ -26,9 +29,31 @@ public class FormRekamMedisController {
     private RekamMedis rekamMedis;
 
     @FXML public void initialize() {
+        cbPendaftaran.getItems().addAll(new PendaftaranService().getAll());
         cbPasien.getItems().addAll(new PasienService().getAll());
         cbDokter.getItems().addAll(new DokterService().getAll());
         dpTanggal.setValue(LocalDate.now());
+        
+        // Listener to autofill pasien and dokter if a pendaftaran is selected
+        cbPendaftaran.setOnAction(e -> {
+            Pendaftaran p = cbPendaftaran.getValue();
+            if (p != null) {
+                // Find and select corresponding Pasien
+                for (Pasien pas : cbPasien.getItems()) {
+                    if (pas.getIdPasien() == p.getPasien().getIdPasien()) {
+                        cbPasien.setValue(pas);
+                        break;
+                    }
+                }
+                // Find and select corresponding Dokter
+                for (Dokter dok : cbDokter.getItems()) {
+                    if (dok.getIdDokter() == p.getDokter().getIdDokter()) {
+                        cbDokter.setValue(dok);
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     public void setModeTambah() {
@@ -37,9 +62,11 @@ public class FormRekamMedisController {
     }
 
     @FXML private void handleSimpan() {
+        if (cbPendaftaran.getValue() == null) { AlertUtil.warning("Pilih Pendaftaran terlebih dahulu!"); return; }
         if (cbPasien.getValue() == null || cbDokter.getValue() == null) { AlertUtil.warning("Pilih pasien & dokter!"); return; }
         if (ValidationUtil.isEmpty(txtDiagnosis.getText())) { AlertUtil.warning("Diagnosis wajib diisi!"); return; }
 
+        rekamMedis.setPendaftaran(cbPendaftaran.getValue());
         rekamMedis.setPasien(cbPasien.getValue());
         rekamMedis.setDokter(cbDokter.getValue());
         rekamMedis.setTanggalPeriksa(dpTanggal.getValue());

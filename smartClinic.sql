@@ -73,6 +73,21 @@ CREATE TABLE IF NOT EXISTS rekam_medis(
     FOREIGN KEY (dokter_id) REFERENCES dokter(id) ON DELETE SET NULL
 );
 
+-- Tabel Pemeriksaan
+CREATE TABLE IF NOT EXISTS pemeriksaan (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pasien_id INT,
+    dokter_id INT,
+    tanggal_periksa DATE,
+    tekanan_darah VARCHAR(50),
+    suhu_tubuh DOUBLE,
+    berat_badan DOUBLE,
+    tinggi_badan DOUBLE,
+    catatan TEXT,
+    FOREIGN KEY (pasien_id) REFERENCES pasien(id) ON DELETE CASCADE,
+    FOREIGN KEY (dokter_id) REFERENCES dokter(id) ON DELETE SET NULL
+);
+
 -- Tabel Prediksi
 CREATE TABLE IF NOT EXISTS prediksi(
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -90,7 +105,34 @@ CREATE TABLE IF NOT EXISTS prediksi(
     FOREIGN KEY (pasien_id) REFERENCES pasien(id) ON DELETE CASCADE
 );
 
+-- Tabel Poli
+CREATE TABLE IF NOT EXISTS poli(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama_poli VARCHAR(100),
+    keterangan TEXT
+);
+
+-- Tabel Resep Obat
+CREATE TABLE IF NOT EXISTS resep_obat(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rekam_medis_id INT,
+    obat_id INT,
+    jumlah INT,
+    aturan_pakai VARCHAR(200),
+    FOREIGN KEY (rekam_medis_id) REFERENCES rekam_medis(id) ON DELETE CASCADE,
+    FOREIGN KEY (obat_id) REFERENCES obat(id) ON DELETE CASCADE
+);
+
+-- Alter Dokter
+ALTER TABLE dokter ADD COLUMN poli_id INT DEFAULT NULL;
+ALTER TABLE dokter ADD FOREIGN KEY (poli_id) REFERENCES poli(id) ON DELETE SET NULL;
+
 -- Data Dummy
+INSERT INTO poli(nama_poli, keterangan) VALUES 
+('Poli Umum', 'Pelayanan kesehatan umum'),
+('Poli Anak', 'Pelayanan kesehatan anak'),
+('Poli Gigi', 'Pelayanan kesehatan gigi dan mulut');
+
 INSERT INTO pasien(nama, umur, gender, no_hp, alamat, gula_darah, tekanan_darah) VALUES 
 ('Ahmad', 23, 'Laki-laki', '08123456789', 'Jl. Merdeka No. 1', 90.0, 120.0),
 ('Siti', 20, 'Perempuan', '08123456790', 'Jl. Sudirman No. 2', 85.0, 110.0),

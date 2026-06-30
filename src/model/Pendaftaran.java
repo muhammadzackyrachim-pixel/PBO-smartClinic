@@ -40,4 +40,10 @@ public class Pendaftaran {
     public void setKeluhan(String keluhan) { this.keluhan = keluhan; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    @Override
+    public String toString() {
+        String namaPasien = (pasien != null) ? pasien.getNama() : "Unknown";
+        return "ID: " + idPendaftaran + " - " + namaPasien + " (" + tanggalDaftar + ")";
+    }
 }

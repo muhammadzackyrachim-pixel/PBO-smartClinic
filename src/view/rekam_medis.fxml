@@ -15,6 +15,9 @@
                 <Button text="➕ Tambah"
                         onAction="#handleTambah"
                         styleClass="btn-tambah"/>
+                <Button text="📋 Input Resep"
+                        onAction="#handleInputResep"
+                        styleClass="btn-edit"/>
                 <Button text="🔄 Refresh"
                         onAction="#loadData"
                         styleClass="btn-refresh"/>

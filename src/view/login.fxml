@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.LoginController"
+            stylesheets="@style.css"
+            styleClass="login-root">
+    <center>
+        <VBox alignment="CENTER" spacing="0" maxWidth="420">
+            <!-- Header Card -->
+            <VBox alignment="CENTER" spacing="8" styleClass="login-header">
+                <Label text="🏥" style="-fx-font-size: 48px; -fx-text-fill: white;"/>
+                <Label text="SMART CLINIC" styleClass="login-title"/>
+                <Label text="Sistem Manajemen Klinik" styleClass="login-subtitle"/>
+            </VBox>
+            <!-- Form Card -->
+            <VBox alignment="CENTER" spacing="20" styleClass="login-form">
+                <Label text="Login ke Akun Anda" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #0f172a;"/>
+                <VBox spacing="8">
+                    <Label text="Username" styleClass="login-label"/>
+                    <TextField fx:id="txtUsername" promptText="Masukkan username" styleClass="login-input"/>
+                </VBox>
+                <VBox spacing="8">
+                    <Label text="Password" styleClass="login-label"/>
+                    <PasswordField fx:id="txtPassword" promptText="Masukkan password" styleClass="login-input" onAction="#handleLogin"/>
+                </VBox>
+                <Button text="🔑 LOGIN" onAction="#handleLogin" styleClass="login-btn" maxWidth="Infinity"/>
+                <Label fx:id="lblError" text="" styleClass="login-error"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

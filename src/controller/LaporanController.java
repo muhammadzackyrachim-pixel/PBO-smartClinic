@@ -74,7 +74,9 @@ public class LaporanController implements Initializable {
     // GRAFIK 2: DISTRIBUSI GENDER PASIEN (PIE CHART)
     // ============================================
     private void setupPieChartGender() {
-        pieChartGender.setTitle("Distribusi Gender Pasien");
+        if (pieChartGender.getTitle() == null || pieChartGender.getTitle().isEmpty()) {
+            pieChartGender.setTitle("Distribusi Gender Pasien");
+        }
         
         List<Pasien> allPasien = pasienService.getAll();
         int lakiLaki = 0;
@@ -88,16 +90,21 @@ public class LaporanController implements Initializable {
             }
         }
 
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-            new PieChart.Data("Laki-laki (" + lakiLaki + ")", lakiLaki),
-            new PieChart.Data("Perempuan (" + perempuan + ")", perempuan)
-        );
-
-        pieChartGender.setData(pieChartData);
-        
-        // Styling warna
-        pieChartData.get(0).getNode().setStyle("-fx-pie-color: #3b82f6;");
-        pieChartData.get(1).getNode().setStyle("-fx-pie-color: #ec4899;");
+        if (pieChartGender.getData().isEmpty()) {
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data("Laki-laki (" + lakiLaki + ")", lakiLaki),
+                new PieChart.Data("Perempuan (" + perempuan + ")", perempuan)
+            );
+            pieChartGender.setData(pieChartData);
+            pieChartData.get(0).getNode().setStyle("-fx-pie-color: #3b82f6;");
+            pieChartData.get(1).getNode().setStyle("-fx-pie-color: #ec4899;");
+        } else {
+            // Update existing data to prevent UI glitches with labels
+            pieChartGender.getData().get(0).setName("Laki-laki (" + lakiLaki + ")");
+            pieChartGender.getData().get(0).setPieValue(lakiLaki);
+            pieChartGender.getData().get(1).setName("Perempuan (" + perempuan + ")");
+            pieChartGender.getData().get(1).setPieValue(perempuan);
+        }
     }
 
     // ============================================
@@ -147,15 +154,16 @@ public class LaporanController implements Initializable {
         SceneUtil.switchScene(stage, "/view/dashboard.fxml");
     }
     @FXML
-public void handleRefresh() {
-    // Clear chart lama
-    barChartTotal.getData().clear();
-    pieChartGender.getData().clear();
-    barChartPendaftaran.getData().clear();
-    
-    // Load ulang chart dengan data terbaru
-    setupBarChartTotal();
-    setupPieChartGender();
-    setupBarChartPendaftaran();
-}
+    public void handleRefresh() {
+        // Hapus data bar chart lama
+        barChartTotal.getData().clear();
+        barChartPendaftaran.getData().clear();
+        
+        // PieChart tidak di-clear, melainkan di-update nilainya di dalam fungsinya
+        
+        // Load ulang chart dengan data terbaru
+        setupBarChartTotal();
+        setupPieChartGender();
+        setupBarChartPendaftaran();
+    }
 }

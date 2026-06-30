@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.ResepObatController"
+            stylesheets="@style.css">
+    <top>
+        <VBox spacing="10" styleClass="top-panel">
+            <Label text="DATA RESEP OBAT"
+                   styleClass="title"
+                   maxWidth="Infinity"
+                   alignment="CENTER"/>
+            <Label fx:id="lblInfo" text="-"
+                   style="-fx-font-size: 14px; -fx-text-fill: #64748b;"
+                   maxWidth="Infinity"
+                   alignment="CENTER"/>
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="➕ Tambah Resep"
+                        onAction="#handleTambah"
+                        styleClass="btn-tambah"/>
+                <Button text="🗑️ Hapus"
+                        onAction="#handleHapus"
+                        styleClass="btn-hapus"/>
+                <Button text="🔄 Refresh"
+                        onAction="#loadData"
+                        styleClass="btn-refresh"/>
+                <Button text="⬅️ Kembali"
+                        onAction="#handleBack"
+                        styleClass="btn-close"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <VBox spacing="15" styleClass="main-panel" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tableResep"
+                       VBox.vgrow="ALWAYS"
+                       maxWidth="Infinity">
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="colObat" text="Nama Obat" prefWidth="200"/>
+                    <TableColumn fx:id="colDosis" text="Dosis" prefWidth="120"/>
+                    <TableColumn fx:id="colJumlah" text="Jumlah" prefWidth="80"/>
+                    <TableColumn fx:id="colAturanPakai" text="Aturan Pakai" prefWidth="300"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

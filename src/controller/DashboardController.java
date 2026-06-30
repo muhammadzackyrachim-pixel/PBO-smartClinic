@@ -22,6 +22,7 @@ import service.DokterService;
 import service.ObatService;
 import service.PasienService;
 import service.PendaftaranService;
+import service.PoliService;
 import service.PrediksiService;
 import service.RekamMedisService;
 import util.AlertUtil;
@@ -206,6 +207,25 @@ public class DashboardController implements Initializable {
     @FXML
     private void openLaporan() {
         SceneUtil.switchScene(getStage(), "/view/laporan.fxml");
+    }
+
+    @FXML
+    private void openPoli() {
+        SceneUtil.switchScene(getStage(), "/view/poli.fxml");
+    }
+
+    @FXML
+    private void openResepObat() {
+        SceneUtil.switchScene(getStage(), "/view/rekam_medis.fxml");
+    }
+
+    @FXML
+    private void handleLogout() {
+        if (AlertUtil.confirm("Apakah Anda yakin ingin logout?")) {
+            Stage stage = getStage();
+            stage.setTitle("Smart Clinic - Login");
+            SceneUtil.switchScene(stage, "/view/login.fxml");
+        }
     }
 
     private Stage getStage() {

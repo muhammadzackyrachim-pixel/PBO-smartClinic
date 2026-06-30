@@ -16,6 +16,8 @@ import model.RekamMedis;
 import service.RekamMedisService;
 import util.AlertUtil;
 import util.SceneUtil;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 public class RekamMedisController implements Initializable {
     @FXML private TableView<RekamMedis> tableRekamMedis;
@@ -51,6 +53,28 @@ public class RekamMedisController implements Initializable {
             stage.showAndWait();
             loadData();
         } catch (Exception e) { AlertUtil.error("Gagal buka form"); }
+    }
+
+    @FXML public void handleInputResep() {
+        RekamMedis selected = tableRekamMedis.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            AlertUtil.warning("Pilih rekam medis terlebih dahulu!");
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/resep_obat.fxml"));
+            Parent root = loader.load();
+            ResepObatController ctrl = loader.getController();
+            ctrl.setRekamMedis(selected);
+            Stage stage = (Stage) tableRekamMedis.getScene().getWindow();
+            Scene scene = new Scene(root, 1280, 720);
+            scene.getStylesheets().add(getClass().getResource("/view/style.css").toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            AlertUtil.error("Gagal membuka halaman resep: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML public void handleBack() {

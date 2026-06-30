@@ -43,6 +43,7 @@
                     <BarChart fx:id="barChartTotal"
                               prefHeight="350"
                               prefWidth="800"
+                              animated="false"
                               VBox.vgrow="ALWAYS">
                         <xAxis>
                             <CategoryAxis label="Modul"/>
@@ -62,6 +63,7 @@
                         <PieChart fx:id="pieChartGender"
                                   prefHeight="350"
                                   prefWidth="400"
+                                  animated="false"
                                   VBox.vgrow="ALWAYS"/>
                     </VBox>
 
@@ -71,6 +73,7 @@
                         <BarChart fx:id="barChartPendaftaran"
                                   prefHeight="350"
                                   prefWidth="400"
+                                  animated="false"
                                   VBox.vgrow="ALWAYS">
                             <xAxis>
                                 <CategoryAxis label="Status"/>

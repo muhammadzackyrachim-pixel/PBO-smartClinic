@@ -18,6 +18,7 @@
                 <Button text="🩺 Dokter" styleClass="menu-btn" onAction="#openDokter"/>
                 <Button text="👩‍💼 Petugas" styleClass="menu-btn" onAction="#openPetugas"/>
                 <Button text="💊 Obat" styleClass="menu-btn" onAction="#openObat"/>
+                <Button text="🏥 Poli" styleClass="menu-btn" onAction="#openPoli"/>
                 
                 <Label text="TRANSAKSI" styleClass="menu-group"/>
                 <Button text="📝 Pendaftaran" styleClass="menu-btn" onAction="#openPendaftaran"/>
@@ -29,6 +30,7 @@
                 <Button text="📜 Riwayat Periksa" styleClass="menu-btn" onAction="#openRiwayatPemeriksaan"/>
                 
                 <Button text="🩻 Rekam Medis" styleClass="menu-btn" onAction="#openRekamMedis"/>
+                <Button text="📋 Input Resep" styleClass="menu-btn" onAction="#openResepObat"/>
                 <Button text="🧠 Prediksi ML" styleClass="menu-btn" onAction="#openPrediksi"/>
                 
                 <Label text="LAPORAN" styleClass="menu-group"/>
@@ -36,7 +38,7 @@
                 <Button text="📈 Laporan Klinik" styleClass="menu-btn" onAction="#openLaporan"/>
                 
                 <Region VBox.vgrow="ALWAYS"/>
-                <Button text="🚪 Logout" styleClass="logout-btn"/>
+                <Button text="🚪 Logout" styleClass="logout-btn" onAction="#handleLogout"/>
             </VBox>
         </ScrollPane>
     </left>

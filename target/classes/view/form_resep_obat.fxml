@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.FormResepObatController"
+            stylesheets="@style.css">
+    <top>
+        <VBox spacing="10" styleClass="top-panel">
+            <Label text="FORM INPUT RESEP OBAT"
+                   styleClass="title"
+                   maxWidth="Infinity"
+                   alignment="CENTER"/>
+        </VBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="25">
+            <GridPane alignment="CENTER" hgap="20" vgap="18">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="130"/>
+                    <ColumnConstraints minWidth="350"/>
+                </columnConstraints>
+                <Label text="Pilih Obat" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cbObat" promptText="Pilih obat..." maxWidth="Infinity" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Jumlah" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtJumlah" promptText="Masukkan jumlah" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Aturan Pakai" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtAturanPakai" promptText="Contoh: 3x1 setelah makan" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </GridPane>
+            <HBox alignment="CENTER" spacing="20">
+                <Button text="💾 Simpan" onAction="#handleSimpan" styleClass="btn-save"/>
+                <Button text="✖ Batal" onAction="#handleBatal" styleClass="btn-cancel"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
