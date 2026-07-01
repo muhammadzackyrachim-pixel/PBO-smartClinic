@@ -12,6 +12,7 @@ D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\Oba
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\PasienController.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\PoliDAO.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\PemeriksaanController.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\util\PasswordUtil.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\PrediksiService.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\util\DocumentUtil.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\PrediksiController.java
@@ -34,12 +35,14 @@ D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Klinik.j
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\dao\PemeriksaanDAO.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Person.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\ObatService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\util\MigrateDB.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Prediksi.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\DokterService.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\AppMain.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\LoginController.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\service\RekamMedisService.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\controller\LaporanController.java
-D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\com\AppMain.java
+D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\util\ResponsiveUtil.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\util\SessionUtil.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Pemeriksaan.java
 D:\Kuliah\Tugas\semester 4\PBO\SmartClinicUAS\PBO-smartClinic\src\model\Poli.java

@@ -16,7 +16,7 @@ public class PrediksiDAO {
 
     public List<Prediksi> getAll() {
         List<Prediksi> list = new ArrayList<>();
-        String sql = "SELECT pr.*, pas.nama as nama_pasien FROM prediksi pr " +
+        String sql = "SELECT pr.*, pas.nama as nama_pasien, pas.tanggal_lahir as tanggal_lahir_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien FROM prediksi pr " +
                      "LEFT JOIN pasien pas ON pr.pasien_id = pas.id ORDER BY pr.id ASC";
         try (Connection conn = DBConnection.connect();
              Statement stmt = conn.createStatement();
@@ -30,6 +30,9 @@ public class PrediksiDAO {
                 Pasien pasien = new Pasien();
                 pasien.setIdPasien(rs.getInt("pasien_id"));
                 pasien.setNama(rs.getString("nama_pasien"));
+                pasien.setTanggalLahir(rs.getDate("tanggal_lahir_pasien") != null ? rs.getDate("tanggal_lahir_pasien").toLocalDate() : null);
+                pasien.setGender(rs.getString("gender_pasien"));
+                pasien.setAlamat(rs.getString("alamat_pasien"));
                 p.setPasien(pasien);
                 
                 list.add(p);
@@ -63,7 +66,9 @@ public class PrediksiDAO {
     }
 
     public Prediksi getLatestByPasienId(int pasienId) {
-        String sql = "SELECT * FROM prediksi WHERE pasien_id = ? ORDER BY id DESC LIMIT 1";
+        String sql = "SELECT pr.*, pas.nama as nama_pasien, pas.tanggal_lahir as tanggal_lahir_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien FROM prediksi pr " +
+                     "LEFT JOIN pasien pas ON pr.pasien_id = pas.id " +
+                     "WHERE pr.pasien_id = ? ORDER BY pr.id DESC LIMIT 1";
         try (Connection conn = DBConnection.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, pasienId);
@@ -81,6 +86,15 @@ public class PrediksiDAO {
                     p.setAge(rs.getInt("age"));
                     p.setHasil(rs.getString("hasil"));
                     p.setTanggalPrediksi(rs.getDate("tanggal_prediksi") != null ? rs.getDate("tanggal_prediksi").toLocalDate() : null);
+                    
+                    Pasien pasien = new Pasien();
+                    pasien.setIdPasien(rs.getInt("pasien_id"));
+                    pasien.setNama(rs.getString("nama_pasien"));
+                    pasien.setTanggalLahir(rs.getDate("tanggal_lahir_pasien") != null ? rs.getDate("tanggal_lahir_pasien").toLocalDate() : null);
+                    pasien.setGender(rs.getString("gender_pasien"));
+                    pasien.setAlamat(rs.getString("alamat_pasien"));
+                    p.setPasien(pasien);
+                    
                     return p;
                 }
             }

@@ -18,6 +18,7 @@ import util.ValidationUtil;
 public class PrediksiController {
 
     @FXML private ComboBox<Pasien> cbPasien;
+    @FXML private Label lblPregnancies;
     @FXML private TextField txtPregnancies;
     @FXML private TextField txtGlucose;
     @FXML private TextField txtBloodPressure;
@@ -38,6 +39,24 @@ public class PrediksiController {
         cbPasien.setOnAction(e -> {
             Pasien p = cbPasien.getValue();
             if (p != null) {
+                // Cek Gender Laki-laki
+                if ("Laki-laki".equalsIgnoreCase(p.getGender())) {
+                    txtPregnancies.setText("0");
+                    txtPregnancies.setVisible(false);
+                    txtPregnancies.setManaged(false);
+                    if (lblPregnancies != null) {
+                        lblPregnancies.setVisible(false);
+                        lblPregnancies.setManaged(false);
+                    }
+                } else {
+                    txtPregnancies.setVisible(true);
+                    txtPregnancies.setManaged(true);
+                    if (lblPregnancies != null) {
+                        lblPregnancies.setVisible(true);
+                        lblPregnancies.setManaged(true);
+                    }
+                }
+                
                 // Set default info from Pasien
                 txtAge.setText(String.valueOf(p.getUmur()));
                 txtGlucose.setText(String.valueOf(p.getGulaDarah()));
@@ -46,7 +65,9 @@ public class PrediksiController {
                 // Coba muat data prediksi terakhir
                 Prediksi latest = prediksiService.getLatestByPasienId(p.getIdPasien());
                 if (latest != null) {
-                    txtPregnancies.setText(String.valueOf(latest.getPregnancies()));
+                    if (!"Laki-laki".equalsIgnoreCase(p.getGender())) {
+                        txtPregnancies.setText(String.valueOf(latest.getPregnancies()));
+                    }
                     txtGlucose.setText(String.valueOf(latest.getGlucose()));
                     txtBloodPressure.setText(String.valueOf(latest.getBloodPressure()));
                     txtSkinThickness.setText(String.valueOf(latest.getSkinThickness()));
@@ -56,7 +77,9 @@ public class PrediksiController {
                     txtAge.setText(String.valueOf(latest.getAge()));
                 } else {
                     // Kosongkan field jika belum ada prediksi sebelumnya
-                    txtPregnancies.setText("");
+                    if (!"Laki-laki".equalsIgnoreCase(p.getGender())) {
+                        txtPregnancies.setText("");
+                    }
                     txtSkinThickness.setText("");
                     txtInsulin.setText("");
                     txtBMI.setText("");
@@ -150,10 +173,26 @@ public class PrediksiController {
             lblHasil.setText("Format angka tidak valid!");
             lblHasil.setStyle("-fx-text-fill: #f59e0b; -fx-font-weight: bold;");
             AlertUtil.error("Mohon periksa kembali input angka Anda!");
+            lblHasil.setStyle("-fx-text-fill: red;");
+            lblHasil.setText("Error saat memprediksi: " + e.getMessage());
         } catch (Exception e) {
             AlertUtil.error("Terjadi kesalahan: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleKosongkan() {
+        txtPregnancies.clear();
+        txtGlucose.clear();
+        txtBloodPressure.clear();
+        txtSkinThickness.clear();
+        txtInsulin.clear();
+        txtBMI.clear();
+        txtPedigree.clear();
+        txtAge.clear();
+        lblHasil.setText("Belum ada prediksi");
+        lblHasil.setStyle("-fx-text-fill: #64748b;");
     }
 
     // ✅ METHOD HANDLE BACK UNTUK TOMBOL KEMBALI

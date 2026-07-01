@@ -20,6 +20,8 @@ import util.SceneUtil;
 import controller.DashboardController;
 
 public class ObatController implements Initializable {
+    @FXML private javafx.scene.layout.HBox hboxTombol;
+    @FXML private javafx.scene.control.Button btnTambah, btnEdit, btnHapus;
     @FXML private TableView<Obat> tableObat;
     @FXML private TableColumn<Obat, Integer> colId, colStok;
     @FXML private TableColumn<Obat, String> colNama, colJenis, colDosis;

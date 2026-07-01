@@ -20,7 +20,7 @@
                 </columnConstraints>
                 <Label text="ID"/><TextField fx:id="txtId" editable="false" prefWidth="220" GridPane.columnIndex="1"/>
                 <Label text="Nama" GridPane.rowIndex="1"/><TextField fx:id="txtNama" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <Label text="Umur" GridPane.rowIndex="2"/><TextField fx:id="txtUmur" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="Tanggal Lahir" GridPane.rowIndex="2"/><DatePicker fx:id="dpTanggalLahir" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
                 <Label text="Gender" GridPane.rowIndex="3"/><ComboBox fx:id="cbGender" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                 <Label text="No HP" GridPane.rowIndex="4"/><TextField fx:id="txtNoHP" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
                 <Label text="Alamat" GridPane.rowIndex="5"/><TextField fx:id="txtAlamat" prefWidth="220" GridPane.columnIndex="1" GridPane.rowIndex="5"/>

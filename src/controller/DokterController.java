@@ -20,6 +20,8 @@ import util.SceneUtil;
 import controller.DashboardController;
 
 public class DokterController implements Initializable {
+    @FXML private javafx.scene.layout.HBox hboxTombol;
+    @FXML private javafx.scene.control.Button btnTambah, btnEdit, btnHapus;
     @FXML private TableView<Dokter> tableDokter;
     @FXML private TableColumn<Dokter, Integer> colId;
     @FXML private TableColumn<Dokter, String> colNama, colSpesialisasi, colHP, colEmail;

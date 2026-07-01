@@ -11,14 +11,14 @@
                    styleClass="title"
                    maxWidth="Infinity"
                    alignment="CENTER"/>
-            <HBox spacing="10" alignment="CENTER">
-                <Button text="➕ Tambah"
+            <HBox fx:id="hboxTombol" spacing="10" alignment="CENTER">
+                <Button fx:id="btnTambah" text="➕ Tambah"
                         onAction="#handleTambah"
                         styleClass="btn-tambah"/>
-                <Button text="📋 Input Resep"
+                <Button fx:id="btnEdit" text="💊 Input Resep"
                         onAction="#handleInputResep"
                         styleClass="btn-edit"/>
-                <Button text="🖨️ Cetak Surat Sakit"
+                <Button fx:id="btnCetak" text="📄 Cetak Surat Sakit"
                         onAction="#handleCetakSurat"
                         styleClass="btn-tambah"
                         style="-fx-background-color: #0f172a;"/>

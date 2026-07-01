@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import controller.DashboardController;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Pasien;
@@ -11,7 +12,8 @@ import util.AlertUtil;
 import util.ValidationUtil;
 
 public class FormPasienController {
-    @FXML private TextField txtId, txtNama, txtUmur, txtNoHP, txtAlamat, txtGulaDarah, txtTekananDarah;
+    @FXML private TextField txtId, txtNama, txtNoHP, txtAlamat, txtGulaDarah, txtTekananDarah;
+    @FXML private DatePicker dpTanggalLahir;
     @FXML private ComboBox<String> cbGender;
 
     private PasienService service = new PasienService();
@@ -23,7 +25,7 @@ public class FormPasienController {
 
     public void setModeTambah() {
         pasien = new Pasien();
-        txtId.setText("Auto"); txtNama.clear(); txtUmur.clear();
+        txtId.setText("Auto"); txtNama.clear(); dpTanggalLahir.setValue(null);
         txtNoHP.clear(); txtAlamat.clear(); txtGulaDarah.clear(); txtTekananDarah.clear();
         cbGender.getSelectionModel().clearSelection();
     }
@@ -31,7 +33,7 @@ public class FormPasienController {
     public void setModeEdit(Pasien p) {
         this.pasien = p;
         txtId.setText(String.valueOf(p.getIdPasien()));
-        txtNama.setText(p.getNama()); txtUmur.setText(String.valueOf(p.getUmur()));
+        txtNama.setText(p.getNama()); dpTanggalLahir.setValue(p.getTanggalLahir());
         cbGender.setValue(p.getGender()); txtNoHP.setText(p.getNoHP());
         txtAlamat.setText(p.getAlamat());
         txtGulaDarah.setText(String.valueOf(p.getGulaDarah()));
@@ -42,7 +44,7 @@ public class FormPasienController {
         if (ValidationUtil.isEmpty(txtNama.getText())) { AlertUtil.warning("Nama wajib diisi!"); return; }
         
         pasien.setNama(txtNama.getText());
-        pasien.setUmur(Integer.parseInt(txtUmur.getText()));
+        pasien.setTanggalLahir(dpTanggalLahir.getValue());
         pasien.setGender(cbGender.getValue());
         pasien.setNoHP(txtNoHP.getText());
         pasien.setAlamat(txtAlamat.getText());

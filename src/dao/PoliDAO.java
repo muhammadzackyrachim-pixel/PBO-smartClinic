@@ -83,4 +83,21 @@ public class PoliDAO {
         }
         return 0;
     }
+
+    public boolean isNamaPoliExists(String namaPoli, int excludeId) {
+        String sql = "SELECT COUNT(*) as total FROM poli WHERE LOWER(nama_poli) = LOWER(?) AND id != ?";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, namaPoli);
+            ps.setInt(2, excludeId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total") > 0;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

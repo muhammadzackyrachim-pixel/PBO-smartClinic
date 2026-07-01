@@ -8,6 +8,7 @@ model\Klinik.class
 controller\PendaftaranController.class
 controller\FormRekamMedisController.class
 dao\PasienDAO.class
+util\PasswordUtil.class
 model\Pemeriksaan.class
 controller\FormResepObatController.class
 model\Predictable.class
@@ -27,6 +28,7 @@ controller\FormPoliController.class
 controller\LoginController.class
 service\PoliService.class
 controller\RekamMedisController.class
+util\ResponsiveUtil.class
 service\PemeriksaanService.class
 model\RekamMedis.class
 service\ResepObatService.class
@@ -46,6 +48,7 @@ dao\PemeriksaanDAO.class
 model\Poli.class
 model\Prediksi.class
 controller\FormDokterController.class
+util\MigrateDB.class
 controller\FormPasienController.class
 util\SessionUtil.class
 controller\FormPendaftaranController.class
@@ -60,7 +63,6 @@ controller\FormPetugasController.class
 controller\PemeriksaanController.class
 dao\PetugasDAO.class
 service\PendaftaranService.class
-controller\DashboardController$1.class
 dao\ObatDAO.class
 util\TestModel.class
 service\PasienService.class

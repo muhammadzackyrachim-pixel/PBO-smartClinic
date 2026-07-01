@@ -2,6 +2,7 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,10 +22,13 @@ import util.SceneUtil;
 import controller.DashboardController;
 
 public class PasienController implements Initializable {
+    @FXML private javafx.scene.layout.HBox hboxTombol;
+    @FXML private javafx.scene.control.Button btnTambah, btnEdit, btnHapus;
     @FXML private TextField txtCari;
     @FXML private TableView<Pasien> tablePasien;
     @FXML private TableColumn<Pasien, Integer> colId;
     @FXML private TableColumn<Pasien, String> colNama, colGender, colAlamat, colHP;
+    @FXML private TableColumn<Pasien, LocalDate> colTanggalLahir;
     @FXML private TableColumn<Pasien, Integer> colUmur;
     @FXML private TableColumn<Pasien, Double> colGula, colTekanan;
 
@@ -35,6 +39,7 @@ public class PasienController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         colId.setCellValueFactory(new PropertyValueFactory<>("idPasien"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
+        colTanggalLahir.setCellValueFactory(new PropertyValueFactory<>("tanggalLahir"));
         colUmur.setCellValueFactory(new PropertyValueFactory<>("umur"));
         colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
         colAlamat.setCellValueFactory(new PropertyValueFactory<>("alamat"));
@@ -42,6 +47,12 @@ public class PasienController implements Initializable {
         colGula.setCellValueFactory(new PropertyValueFactory<>("gulaDarah"));
         colTekanan.setCellValueFactory(new PropertyValueFactory<>("tekananDarah"));
         loadData();
+        
+        if (txtCari != null) {
+            txtCari.textProperty().addListener((obs, oldV, newV) -> {
+                handleCari();
+            });
+        }
     }
 
     @FXML public void loadData() {

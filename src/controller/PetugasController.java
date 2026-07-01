@@ -19,6 +19,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PetugasController implements Initializable {
+    @FXML private javafx.scene.layout.HBox hboxTombol;
+    @FXML private javafx.scene.control.Button btnTambah, btnEdit, btnHapus;
     @FXML private TableView<Petugas> tablePetugas;
     @FXML private TableColumn<Petugas, Integer> colId;
     @FXML private TableColumn<Petugas, String> colNama, colUsername, colRole, colNoHP, colEmail;

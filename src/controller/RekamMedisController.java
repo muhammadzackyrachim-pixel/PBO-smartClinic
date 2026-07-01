@@ -33,6 +33,9 @@ public class RekamMedisController implements Initializable {
     @FXML private Button btnPrev, btnNext;
     @FXML private Label lblHalaman;
     
+    @FXML private javafx.scene.layout.HBox hboxTombol;
+    @FXML private Button btnTambah, btnEdit, btnCetak;
+    
     @FXML private TableView<RekamMedis> tableRekamMedis;
     @FXML private TableColumn<RekamMedis, Integer> colId;
     @FXML private TableColumn<RekamMedis, String> colPasien, colDokter, colTanggal, colDiagnosis, colTindakan;
@@ -52,10 +55,12 @@ public class RekamMedisController implements Initializable {
         colDiagnosis.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
         colTindakan.setCellValueFactory(new PropertyValueFactory<>("tindakan"));
         
-        txtSearch.textProperty().addListener((obs, oldV, newV) -> {
-            currentPage = 1;
-            loadData();
-        });
+        if (txtSearch != null) {
+            txtSearch.textProperty().addListener((obs, oldV, newV) -> {
+                currentPage = 1;
+                loadData();
+            });
+        }
         
         loadData();
     }

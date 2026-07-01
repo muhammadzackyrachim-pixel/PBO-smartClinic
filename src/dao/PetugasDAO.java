@@ -9,6 +9,7 @@ import java.util.List;
 
 import database.DBConnection;
 import model.Petugas;
+import util.PasswordUtil;
 
 public class PetugasDAO {
 
@@ -97,22 +98,26 @@ public class PetugasDAO {
     }
 
     public Petugas login(String username, String password) {
-        String sql = "SELECT * FROM petugas WHERE username=? AND password=?";
+        String sql = "SELECT * FROM petugas WHERE username=?";
         try (Connection conn = DBConnection.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, username);
-            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Petugas(
-                    rs.getInt("id"),
-                    rs.getString("nama"),
-                    rs.getString("username"),
-                    rs.getString("password"),
-                    rs.getString("role"),
-                    rs.getString("no_hp"),
-                    rs.getString("email")
-                );
+                String hashedDbPassword = rs.getString("password");
+                // Check if the provided password matches the hashed password
+                // Fallback to plain text check just in case older passwords haven't been re-hashed yet
+                if (PasswordUtil.checkPassword(password, hashedDbPassword) || password.equals(hashedDbPassword)) {
+                    return new Petugas(
+                        rs.getInt("id"),
+                        rs.getString("nama"),
+                        rs.getString("username"),
+                        hashedDbPassword,
+                        rs.getString("role"),
+                        rs.getString("no_hp"),
+                        rs.getString("email")
+                    );
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -23,6 +23,8 @@ import util.SceneUtil;
 import controller.DashboardController;
 
 public class ResepObatController implements Initializable {
+    @FXML private javafx.scene.layout.HBox hboxTombol;
+    @FXML private javafx.scene.control.Button btnKembali, btnTambah, btnHapus;
     @FXML private Label lblInfo;
     @FXML private TableView<ResepObat> tableResep;
     @FXML private TableColumn<ResepObat, Integer> colId;

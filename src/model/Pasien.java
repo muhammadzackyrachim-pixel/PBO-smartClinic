@@ -1,9 +1,12 @@
 package model;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 public class Pasien {
     private int idPasien;
     private String nama;
-    private int umur;
+    private LocalDate tanggalLahir;
     private String gender;
     private String noHP;
     private String alamat;
@@ -14,11 +17,11 @@ public class Pasien {
     public Pasien() {}
 
     // Constructor Lengkap
-    public Pasien(int idPasien, String nama, int umur, String gender, 
+    public Pasien(int idPasien, String nama, LocalDate tanggalLahir, String gender, 
                   String noHP, String alamat, double gulaDarah, double tekananDarah) {
         this.idPasien = idPasien;
         this.nama = nama;
-        this.umur = umur;
+        this.tanggalLahir = tanggalLahir;
         this.gender = gender;
         this.noHP = noHP;
         this.alamat = alamat;
@@ -33,8 +36,12 @@ public class Pasien {
     public String getNama() { return nama; }
     public void setNama(String nama) { this.nama = nama; }
 
-    public int getUmur() { return umur; }
-    public void setUmur(int umur) { this.umur = umur; }
+    public LocalDate getTanggalLahir() { return tanggalLahir; }
+    public void setTanggalLahir(LocalDate tanggalLahir) { this.tanggalLahir = tanggalLahir; }
+
+    public int getUmur() {
+        return tanggalLahir != null ? Period.between(tanggalLahir, LocalDate.now()).getYears() : 0;
+    }
 
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
@@ -53,6 +60,6 @@ public class Pasien {
 
     @Override
     public String toString() {
-        return "RM-" + idPasien + " | " + nama + " (" + gender + ", " + umur + " th) - " + alamat;
+        return "RM-" + idPasien + " | " + nama + " (" + gender + ", " + getUmur() + " th) - " + alamat;
     }
 }

@@ -63,41 +63,41 @@
         <VBox spacing="25">
             <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
             <HBox spacing="20">
-                <VBox spacing="10" prefWidth="200" prefHeight="120" styleClass="card-blue">
-                    <Label text="👨‍⚕ Total Pasien" styleClass="card-title"/>
+                <VBox fx:id="cardPasien" spacing="10" minWidth="70" prefWidth="200" prefHeight="120" styleClass="card-blue">
+                    <Label fx:id="lblTitlePasien" text="👨‍⚕ Total Pasien" styleClass="card-title"/>
                     <Label fx:id="lblTotalPasien" text="0" styleClass="card-value"/>
                 </VBox>
-                <VBox spacing="10" prefWidth="200" prefHeight="120" styleClass="card-green">
-                    <Label text="🩺 Total Dokter" styleClass="card-title"/>
+                <VBox fx:id="cardDokter" spacing="10" minWidth="70" prefWidth="200" prefHeight="120" styleClass="card-green">
+                    <Label fx:id="lblTitleDokter" text="🩺 Total Dokter" styleClass="card-title"/>
                     <Label fx:id="lblTotalDokter" text="0" styleClass="card-value"/>
                 </VBox>
-                <VBox spacing="10" prefWidth="200" prefHeight="120" styleClass="card-orange">
-                    <Label text="💊 Total Obat" styleClass="card-title"/>
+                <VBox fx:id="cardObat" spacing="10" minWidth="70" prefWidth="200" prefHeight="120" styleClass="card-orange">
+                    <Label fx:id="lblTitleObat" text="💊 Total Obat" styleClass="card-title"/>
                     <Label fx:id="lblTotalObat" text="0" styleClass="card-value"/>
                 </VBox>
-                <VBox spacing="10" prefWidth="200" prefHeight="120" styleClass="card-red">
-                    <Label text="📝 Pendaftaran" styleClass="card-title"/>
+                <VBox fx:id="cardPendaftaran" spacing="10" minWidth="70" prefWidth="200" prefHeight="120" styleClass="card-red">
+                    <Label fx:id="lblTitlePendaftaran" text="📝 Pendaftaran" styleClass="card-title"/>
                     <Label fx:id="lblTotalPendaftaran" text="0" styleClass="card-value"/>
                 </VBox>
-                <VBox spacing="10" prefWidth="200" prefHeight="120" styleClass="card-blue">
-                    <Label text="📋 Rekam Medis" styleClass="card-title"/>
+                <VBox fx:id="cardRekamMedis" spacing="10" minWidth="70" prefWidth="200" prefHeight="120" styleClass="card-blue">
+                    <Label fx:id="lblTitleRekamMedis" text="📋 Rekam Medis" styleClass="card-title"/>
                     <Label fx:id="lblTotalRekamMedis" text="0" styleClass="card-value"/>
                 </VBox>
-                <VBox spacing="10" prefWidth="200" prefHeight="120" styleClass="card-orange">
-                    <Label text="🧠 Prediksi" styleClass="card-title"/>
+                <VBox fx:id="cardPrediksi" spacing="10" minWidth="70" prefWidth="200" prefHeight="120" styleClass="card-orange">
+                    <Label fx:id="lblTitlePrediksi" text="🧠 Prediksi" styleClass="card-title"/>
                     <Label fx:id="lblTotalPrediksi" text="0" styleClass="card-value"/>
                 </VBox>
             </HBox>
             <VBox spacing="15" styleClass="table-container" VBox.vgrow="ALWAYS">
-                <Label text="Data Pasien Terbaru" styleClass="section-title"/>
+                <Label text="Antrean Hari Ini" styleClass="section-title"/>
                 <TableView fx:id="tableDashboard" prefHeight="400" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
-                        <TableColumn fx:id="colNama" text="Nama" prefWidth="180"/>
-                        <TableColumn fx:id="colUmur" text="Umur" prefWidth="80"/>
-                        <TableColumn fx:id="colGender" text="Gender" prefWidth="120"/>
-                        <TableColumn fx:id="colAlamat" text="Alamat" prefWidth="250"/>
-                        <TableColumn fx:id="colAksi" text="Aksi" prefWidth="150"/>
+                        <TableColumn fx:id="colId" text="ID Daftar" prefWidth="80"/>
+                        <TableColumn fx:id="colNama" text="Nama Pasien" prefWidth="180"/>
+                        <TableColumn fx:id="colWaktu" text="Waktu" prefWidth="100"/>
+                        <TableColumn fx:id="colPoli" text="Dokter / Poli" prefWidth="180"/>
+                        <TableColumn fx:id="colKeluhan" text="Keluhan" prefWidth="250"/>
+                        <TableColumn fx:id="colStatus" text="Status" prefWidth="120"/>
                     </columns>
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

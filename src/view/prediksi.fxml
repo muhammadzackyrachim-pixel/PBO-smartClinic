@@ -42,7 +42,7 @@
                               GridPane.rowIndex="0" 
                               GridPane.columnIndex="1"/>
 
-                    <Label text="Pregnancies" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-text-fill: #1e293b; -fx-font-weight: bold;"/>
+                    <Label fx:id="lblPregnancies" text="Pregnancies" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-text-fill: #1e293b; -fx-font-weight: bold;"/>
                     <TextField fx:id="txtPregnancies" 
                                promptText="Jumlah Kehamilan" 
                                GridPane.rowIndex="1" 
@@ -91,8 +91,13 @@
                                GridPane.columnIndex="1"/>
                 </GridPane>
 
-                <!-- TOMBOL PREDIKSI DAN KEMBALI -->
+                <!-- TOMBOL PREDIKSI DAN KOSONGKAN -->
                 <HBox spacing="15" alignment="CENTER">
+                    <Button text="Kosongkan Form" 
+                            prefWidth="180" 
+                            prefHeight="40"
+                            onAction="#handleKosongkan"
+                            styleClass="btn-hapus"/>
                     <Button text="Prediksi" 
                             prefWidth="200" 
                             prefHeight="40"

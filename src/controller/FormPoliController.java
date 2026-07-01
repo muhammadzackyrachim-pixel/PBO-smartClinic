@@ -39,7 +39,13 @@ public class FormPoliController {
             return;
         }
 
-        poli.setNamaPoli(txtNamaPoli.getText().trim());
+        String inputNamaPoli = txtNamaPoli.getText().trim();
+        if (service.isNamaPoliExists(inputNamaPoli, poli.getIdPoli())) {
+            AlertUtil.warning("Nama Poli sudah terdaftar!");
+            return;
+        }
+
+        poli.setNamaPoli(inputNamaPoli);
         poli.setKeterangan(txtKeterangan.getText().trim());
 
         if (service.save(poli)) {

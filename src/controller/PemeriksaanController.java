@@ -17,6 +17,8 @@ import util.SceneUtil;
 import controller.DashboardController;
 
 public class PemeriksaanController implements Initializable {
+    @FXML private javafx.scene.layout.HBox hboxTombol;
+    @FXML private javafx.scene.control.Button btnTambah, btnHapus;
     @FXML private TableView<Pemeriksaan> tablePemeriksaan;
     @FXML private TableColumn<Pemeriksaan, Integer> colId;
     @FXML private TableColumn<Pemeriksaan, String> colPasien, colDokter, colTanggal, colTensi, colCatatan;

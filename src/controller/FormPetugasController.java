@@ -6,9 +6,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Petugas;
-import service.PetugasService;
 import util.AlertUtil;
 import util.ValidationUtil;
+import util.PasswordUtil;
+import service.PetugasService;
 
 public class FormPetugasController {
     @FXML private TextField txtId, txtNama, txtUsername, txtPassword, txtNoHP, txtEmail;
@@ -31,7 +32,8 @@ public class FormPetugasController {
         this.petugas = p;
         txtId.setText(String.valueOf(p.getIdPetugas()));
         txtNama.setText(p.getNama()); txtUsername.setText(p.getUsername());
-        txtPassword.setText(p.getPassword()); txtNoHP.setText(p.getNoHP());
+        txtPassword.clear(); // Jangan tampilkan password lama, dan kosongkan jika tidak ingin ganti sandi
+        txtNoHP.setText(p.getNoHP());
         txtEmail.setText(p.getEmail()); cbRole.setValue(p.getRole());
     }
 
@@ -39,7 +41,15 @@ public class FormPetugasController {
         if (ValidationUtil.isEmpty(txtNama.getText())) { AlertUtil.warning("Nama wajib diisi!"); return; }
         petugas.setNama(txtNama.getText());
         petugas.setUsername(txtUsername.getText());
-        petugas.setPassword(txtPassword.getText());
+        
+        String inputPassword = txtPassword.getText();
+        if (inputPassword != null && !inputPassword.isEmpty()) {
+            petugas.setPassword(PasswordUtil.hashPassword(inputPassword));
+        } else if (petugas.getIdPetugas() == 0) {
+            // Jika mode tambah dan password kosong
+            AlertUtil.warning("Password wajib diisi untuk pengguna baru!"); return;
+        } // Jika mode edit dan password kosong, password lama tetap dipertahankan
+        
         petugas.setRole(cbRole.getValue());
         petugas.setNoHP(txtNoHP.getText());
         petugas.setEmail(txtEmail.getText());

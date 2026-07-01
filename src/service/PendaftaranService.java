@@ -13,4 +13,6 @@ public class PendaftaranService {
     public boolean updateStatus(int id, String status) { return dao.updateStatus(id, status); }
     public boolean updateStatusByPasien(int pasienId, String currentStatus, String newStatus) { return dao.updateStatusByPasien(pasienId, currentStatus, newStatus); }
     public int getTotal() { return dao.getTotal(); }
+    public List<Pendaftaran> getAllPaginated(int limit, int offset, String keyword) { return dao.getAllPaginated(limit, offset, keyword); }
+    public int getTotal(String keyword) { return dao.getTotal(keyword); }
 }

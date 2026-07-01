@@ -18,7 +18,7 @@ public class PendaftaranDAO {
 
     public List<Pendaftaran> getAll() {
         List<Pendaftaran> list = new ArrayList<>();
-        String sql = "SELECT p.*, pas.nama as nama_pasien, pas.umur as umur_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter " +
+        String sql = "SELECT p.*, pas.nama as nama_pasien, pas.tanggal_lahir as tanggal_lahir_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter " +
                      "FROM pendaftaran p " +
                      "LEFT JOIN pasien pas ON p.pasien_id = pas.id " +
                      "LEFT JOIN dokter dok ON p.dokter_id = dok.id " +
@@ -37,7 +37,7 @@ public class PendaftaranDAO {
                 Pasien pasien = new Pasien();
                 pasien.setIdPasien(rs.getInt("pasien_id"));
                 pasien.setNama(rs.getString("nama_pasien"));
-                pasien.setUmur(rs.getInt("umur_pasien"));
+                pasien.setTanggalLahir(rs.getDate("tanggal_lahir_pasien") != null ? rs.getDate("tanggal_lahir_pasien").toLocalDate() : null);
                 pasien.setGender(rs.getString("gender_pasien"));
                 pasien.setAlamat(rs.getString("alamat_pasien"));
                 p.setPasien(pasien);
@@ -106,6 +106,72 @@ public class PendaftaranDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
             if (rs.next()) {
                 return rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<Pendaftaran> getAllPaginated(int limit, int offset, String keyword) {
+        List<Pendaftaran> list = new ArrayList<>();
+        String sql = "SELECT p.*, pas.nama as nama_pasien, pas.tanggal_lahir as tanggal_lahir_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter " +
+                     "FROM pendaftaran p " +
+                     "LEFT JOIN pasien pas ON p.pasien_id = pas.id " +
+                     "LEFT JOIN dokter dok ON p.dokter_id = dok.id " +
+                     "WHERE pas.nama LIKE ? OR p.keluhan LIKE ? " +
+                     "ORDER BY p.id ASC LIMIT ? OFFSET ?";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            String searchPattern = "%" + (keyword == null ? "" : keyword) + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            ps.setInt(3, limit);
+            ps.setInt(4, offset);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Pendaftaran p = new Pendaftaran();
+                    p.setIdPendaftaran(rs.getInt("id"));
+                    p.setTanggalDaftar(rs.getDate("tanggal_daftar") != null ? rs.getDate("tanggal_daftar").toLocalDate() : null);
+                    p.setWaktuDaftar(rs.getTime("waktu_daftar") != null ? rs.getTime("waktu_daftar").toLocalTime() : null);
+                    p.setKeluhan(rs.getString("keluhan"));
+                    p.setStatus(rs.getString("status"));
+                    
+                    Pasien pasien = new Pasien();
+                    pasien.setIdPasien(rs.getInt("pasien_id"));
+                    pasien.setNama(rs.getString("nama_pasien"));
+                    pasien.setTanggalLahir(rs.getDate("tanggal_lahir_pasien") != null ? rs.getDate("tanggal_lahir_pasien").toLocalDate() : null);
+                    pasien.setGender(rs.getString("gender_pasien"));
+                    pasien.setAlamat(rs.getString("alamat_pasien"));
+                    p.setPasien(pasien);
+                    
+                    Dokter dokter = new Dokter();
+                    dokter.setIdDokter(rs.getInt("dokter_id"));
+                    dokter.setNama(rs.getString("nama_dokter"));
+                    p.setDokter(dokter);
+                    
+                    list.add(p);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getTotal(String keyword) {
+        String sql = "SELECT COUNT(*) as total FROM pendaftaran p " +
+                     "LEFT JOIN pasien pas ON p.pasien_id = pas.id " +
+                     "WHERE pas.nama LIKE ? OR p.keluhan LIKE ?";
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            String searchPattern = "%" + (keyword == null ? "" : keyword) + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("total");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

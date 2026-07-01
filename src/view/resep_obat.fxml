@@ -15,14 +15,14 @@
                    style="-fx-font-size: 14px; -fx-text-fill: #64748b;"
                    maxWidth="Infinity"
                    alignment="CENTER"/>
-            <HBox spacing="10" alignment="CENTER">
-                <Button text="⬅ Kembali"
+            <HBox fx:id="hboxTombol" spacing="10" alignment="CENTER">
+                <Button fx:id="btnKembali" text="🔙 Kembali"
                         onAction="#handleBack"
                         styleClass="btn-close"/>
-                <Button text="➕ Tambah Resep"
+                <Button fx:id="btnTambah" text="➕ Tambah Resep"
                         onAction="#handleTambah"
                         styleClass="btn-tambah"/>
-                <Button text="🗑️ Hapus"
+                <Button fx:id="btnHapus" text="🗑️ Hapus"
                         onAction="#handleHapus"
                         styleClass="btn-hapus"/>
             </HBox>

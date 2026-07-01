@@ -16,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Pasien;
 import service.DokterService;
@@ -37,13 +38,18 @@ public class DashboardController implements Initializable {
     @FXML private Label lblTotalRekamMedis;
     @FXML private Label lblTotalPrediksi;
     @FXML private TextField txtCariPasien;
-    @FXML private TableView<Pasien> tableDashboard;
-    @FXML private TableColumn<Pasien, Integer> colId;
-    @FXML private TableColumn<Pasien, String> colNama;
-    @FXML private TableColumn<Pasien, Integer> colUmur;
-    @FXML private TableColumn<Pasien, String> colGender;
-    @FXML private TableColumn<Pasien, String> colAlamat;
-    @FXML private TableColumn<Pasien, Void> colAksi;
+    
+    // Cards & Labels
+    @FXML private VBox cardPasien, cardDokter, cardObat, cardPendaftaran, cardRekamMedis, cardPrediksi;
+    @FXML private Label lblTitlePasien, lblTitleDokter, lblTitleObat, lblTitlePendaftaran, lblTitleRekamMedis, lblTitlePrediksi;
+
+    @FXML private TableView<model.Pendaftaran> tableDashboard;
+    @FXML private TableColumn<model.Pendaftaran, Integer> colId;
+    @FXML private TableColumn<model.Pendaftaran, String> colNama;
+    @FXML private TableColumn<model.Pendaftaran, String> colWaktu;
+    @FXML private TableColumn<model.Pendaftaran, String> colPoli;
+    @FXML private TableColumn<model.Pendaftaran, String> colKeluhan;
+    @FXML private TableColumn<model.Pendaftaran, String> colStatus;
     @FXML private javafx.scene.layout.BorderPane mainPane;
     @FXML private javafx.scene.control.ScrollPane sidebarContainer;
     @FXML private Label lblCurrentUser;
@@ -83,15 +89,24 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         setupRBAC();
 
-        colId.setCellValueFactory(new PropertyValueFactory<>("idPasien"));
-        colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
-        colUmur.setCellValueFactory(new PropertyValueFactory<>("umur"));
-        colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        colAlamat.setCellValueFactory(new PropertyValueFactory<>("alamat"));
+        colId.setCellValueFactory(new PropertyValueFactory<>("idPendaftaran"));
+        colNama.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPasien() != null ? cellData.getValue().getPasien().getNama() : ""));
+        colWaktu.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getWaktuDaftar() != null ? cellData.getValue().getWaktuDaftar().toString() : ""));
+        colPoli.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDokter() != null ? cellData.getValue().getDokter().getNama() : ""));
+        colKeluhan.setCellValueFactory(new PropertyValueFactory<>("keluhan"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        setupKolomAksi();
-        tableDashboard.setEditable(true);
+        tableDashboard.setEditable(false);
+        
+        if (txtCariPasien != null) {
+            txtCariPasien.textProperty().addListener((obs, oldV, newV) -> {
+                loadData();
+            });
+        }
+        
         loadData();
+        
+        setupCardListeners();
         
         // Simpan konten asli bagian tengah (Dashboard)
         javafx.application.Platform.runLater(() -> {
@@ -167,87 +182,58 @@ public class DashboardController implements Initializable {
         }
     }
 
-    private void setupKolomAksi() {
-        colAksi.setCellFactory(param -> new TableCell<Pasien, Void>() {
-            private final Button btnEdit = new Button("Edit");
-            private final Button btnDelete = new Button("Hapus");
-            private final HBox pane = new HBox(5, btnEdit, btnDelete);
+    private void setupCardListeners() {
+        final String origPasien = "Total Pasien";
+        final String origDokter = "Total Dokter";
+        final String origObat = "Total Obat";
+        final String origPendaftaran = "Pendaftaran";
+        final String origRekamMedis = "Rekam Medis";
+        final String origPrediksi = "Prediksi";
+        
+        // Retrieve icons dynamically from FXML to avoid hardcoding emojis in Java which breaks cp1252 compilation
+        final String iconPasien = lblTitlePasien.getText().split(" ")[0];
+        final String iconDokter = lblTitleDokter.getText().split(" ")[0];
+        final String iconObat = lblTitleObat.getText().split(" ")[0];
+        final String iconPendaftaran = lblTitlePendaftaran.getText().split(" ")[0];
+        final String iconRekamMedis = lblTitleRekamMedis.getText().split(" ")[0];
+        final String iconPrediksi = lblTitlePrediksi.getText().split(" ")[0];
 
-            {
-                btnEdit.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;");
-                btnDelete.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;");
-                btnEdit.setPadding(new Insets(5, 10, 5, 10));
-                btnDelete.setPadding(new Insets(5, 10, 5, 10));
+        // Mencegah JavaFX menambahkan titik tiga (...) ketika area mengecil
+        lblTitlePasien.setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
+        lblTitleDokter.setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
+        lblTitleObat.setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
+        lblTitlePendaftaran.setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
+        lblTitleRekamMedis.setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
+        lblTitlePrediksi.setTextOverrun(javafx.scene.control.OverrunStyle.CLIP);
 
-                btnEdit.setOnAction(event -> {
-                    Pasien pasien = getTableView().getItems().get(getIndex());
-                    handleEditPasien(pasien);
-                });
-
-                btnDelete.setOnAction(event -> {
-                    Pasien pasien = getTableView().getItems().get(getIndex());
-                    handleDeletePasien(pasien);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(pane);
-                }
-            }
+        cardPasien.widthProperty().addListener((obs, oldVal, newVal) -> {
+            lblTitlePasien.setText(newVal.doubleValue() < 120 ? iconPasien : iconPasien + " " + origPasien);
+        });
+        cardDokter.widthProperty().addListener((obs, oldVal, newVal) -> {
+            lblTitleDokter.setText(newVal.doubleValue() < 120 ? iconDokter : iconDokter + " " + origDokter);
+        });
+        cardObat.widthProperty().addListener((obs, oldVal, newVal) -> {
+            lblTitleObat.setText(newVal.doubleValue() < 120 ? iconObat : iconObat + " " + origObat);
+        });
+        cardPendaftaran.widthProperty().addListener((obs, oldVal, newVal) -> {
+            lblTitlePendaftaran.setText(newVal.doubleValue() < 120 ? iconPendaftaran : iconPendaftaran + " " + origPendaftaran);
+        });
+        cardRekamMedis.widthProperty().addListener((obs, oldVal, newVal) -> {
+            lblTitleRekamMedis.setText(newVal.doubleValue() < 120 ? iconRekamMedis : iconRekamMedis + " " + origRekamMedis);
+        });
+        cardPrediksi.widthProperty().addListener((obs, oldVal, newVal) -> {
+            lblTitlePrediksi.setText(newVal.doubleValue() < 120 ? iconPrediksi : iconPrediksi + " " + origPrediksi);
         });
     }
 
-    @FXML
-    private void handleCariPasien() {
-        String keyword = txtCariPasien.getText().trim();
-        
-        if (keyword.isEmpty()) {
-            loadData();
-            return;
-        }
+    /* Kolom aksi dihapus dari Dashboard sesuai saran */
 
-        List<Pasien> hasilPencarian = pasienService.search(keyword);
-        
-        if (hasilPencarian.isEmpty()) {
-            AlertUtil.warning("Data pasien dengan kata kunci '" + keyword + "' tidak ditemukan!");
-            tableDashboard.getItems().clear();
-        } else {
-            tableDashboard.getItems().clear();
-            tableDashboard.getItems().addAll(hasilPencarian);
-        }
+    @FXML public void handleCariPasien() {
+        // Sudah digantikan oleh Live Search di textProperty listener
+        loadData();
     }
 
-    private void handleEditPasien(Pasien pasien) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/form_pasien.fxml"));
-            Stage stage = SceneUtil.createModal(loader, "Edit Pasien", 800, 500);
-            FormPasienController ctrl = loader.getController();
-            ctrl.setModeEdit(pasien);
-            stage.showAndWait();
-            loadData();
-        } catch (Exception e) {
-            AlertUtil.error("Gagal membuka form edit: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void handleDeletePasien(Pasien pasien) {
-        boolean confirm = AlertUtil.confirm("Yakin ingin menghapus pasien " + pasien.getNama() + "?");
-        if (confirm) {
-            pasienService.delete(pasien.getIdPasien());
-            AlertUtil.success("Data berhasil dihapus");
-            loadData();
-        }
-    }
-
-    private void loadData() {
-        txtCariPasien.clear();
-        
+    public void loadData() {
         lblTotalPasien.setText(String.valueOf(pasienService.getTotal()));
         lblTotalDokter.setText(String.valueOf(dokterService.getTotal()));
         lblTotalObat.setText(String.valueOf(obatService.getTotal()));
@@ -255,11 +241,19 @@ public class DashboardController implements Initializable {
         lblTotalRekamMedis.setText(String.valueOf(rekamMedisService.getTotal()));
         lblTotalPrediksi.setText(String.valueOf(prediksiService.getTotal()));
 
-        List<Pasien> list = pasienService.getAll();
-        tableDashboard.getItems().clear();
-        if (!list.isEmpty()) {
-            tableDashboard.getItems().addAll(list.subList(0, Math.min(5, list.size())));
-        }
+        // Ambil data antrean hari ini
+        List<model.Pendaftaran> semua = pendaftaranService.getAll();
+        java.time.LocalDate hariIni = java.time.LocalDate.now();
+        String keyword = txtCariPasien != null ? txtCariPasien.getText().toLowerCase() : "";
+        
+        List<model.Pendaftaran> hariIniList = semua.stream()
+            .filter(p -> p.getTanggalDaftar() != null && p.getTanggalDaftar().equals(hariIni))
+            .filter(p -> p.getStatus() != null && !p.getStatus().equalsIgnoreCase("Selesai") && !p.getStatus().equalsIgnoreCase("Batal"))
+            .filter(p -> p.getPasien() != null && p.getPasien().getNama().toLowerCase().contains(keyword))
+            .collect(java.util.stream.Collectors.toList());
+            
+        javafx.collections.ObservableList<model.Pendaftaran> obsList = javafx.collections.FXCollections.observableArrayList(hariIniList);
+        tableDashboard.setItems(obsList);
     }
 
     // ============================================

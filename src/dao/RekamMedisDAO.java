@@ -17,7 +17,7 @@ public class RekamMedisDAO {
 
     public List<RekamMedis> getAll() {
         List<RekamMedis> list = new ArrayList<>();
-        String sql = "SELECT rm.*, pas.nama as nama_pasien, pas.umur as umur_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter, dok.spesialisasi as spesialisasi_dokter " +
+        String sql = "SELECT rm.*, pas.nama as nama_pasien, pas.tanggal_lahir as tanggal_lahir_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter, dok.spesialisasi as spesialisasi_dokter " +
                      "FROM rekam_medis rm " +
                      "LEFT JOIN pasien pas ON rm.pasien_id = pas.id " +
                      "LEFT JOIN dokter dok ON rm.dokter_id = dok.id " +
@@ -36,7 +36,7 @@ public class RekamMedisDAO {
                 Pasien pasien = new Pasien();
                 pasien.setIdPasien(rs.getInt("pasien_id"));
                 pasien.setNama(rs.getString("nama_pasien"));
-                pasien.setUmur(rs.getInt("umur_pasien"));
+                pasien.setTanggalLahir(rs.getDate("tanggal_lahir_pasien") != null ? rs.getDate("tanggal_lahir_pasien").toLocalDate() : null);
                 pasien.setGender(rs.getString("gender_pasien"));
                 pasien.setAlamat(rs.getString("alamat_pasien"));
                 rm.setPasien(pasien);
@@ -57,7 +57,7 @@ public class RekamMedisDAO {
 
     public List<RekamMedis> getAllPaginated(int limit, int offset, String keyword) {
         List<RekamMedis> list = new ArrayList<>();
-        String sql = "SELECT rm.*, pas.nama as nama_pasien, pas.umur as umur_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter, dok.spesialisasi as spesialisasi_dokter " +
+        String sql = "SELECT rm.*, pas.nama as nama_pasien, pas.tanggal_lahir as tanggal_lahir_pasien, pas.gender as gender_pasien, pas.alamat as alamat_pasien, dok.nama as nama_dokter, dok.spesialisasi as spesialisasi_dokter " +
                      "FROM rekam_medis rm " +
                      "LEFT JOIN pasien pas ON rm.pasien_id = pas.id " +
                      "LEFT JOIN dokter dok ON rm.dokter_id = dok.id " +
@@ -84,7 +84,7 @@ public class RekamMedisDAO {
                     Pasien pasien = new Pasien();
                     pasien.setIdPasien(rs.getInt("pasien_id"));
                     pasien.setNama(rs.getString("nama_pasien"));
-                    pasien.setUmur(rs.getInt("umur_pasien"));
+                    pasien.setTanggalLahir(rs.getDate("tanggal_lahir_pasien") != null ? rs.getDate("tanggal_lahir_pasien").toLocalDate() : null);
                     pasien.setGender(rs.getString("gender_pasien"));
                     pasien.setAlamat(rs.getString("alamat_pasien"));
                     rm.setPasien(pasien);

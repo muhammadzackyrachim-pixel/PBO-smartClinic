@@ -23,7 +23,7 @@ public class PasienDAO {
                 list.add(new Pasien(
                     rs.getInt("id"),
                     rs.getString("nama"),
-                    rs.getInt("umur"),
+                    rs.getDate("tanggal_lahir") != null ? rs.getDate("tanggal_lahir").toLocalDate() : null,
                     rs.getString("gender"),
                     rs.getString("no_hp"),
                     rs.getString("alamat"),
@@ -53,7 +53,7 @@ public class PasienDAO {
                 list.add(new Pasien(
                     rs.getInt("id"),
                     rs.getString("nama"),
-                    rs.getInt("umur"),
+                    rs.getDate("tanggal_lahir") != null ? rs.getDate("tanggal_lahir").toLocalDate() : null,
                     rs.getString("gender"),
                     rs.getString("no_hp"),
                     rs.getString("alamat"),
@@ -69,11 +69,11 @@ public class PasienDAO {
 
     // 3. Tambah Data Baru
     public boolean insert(Pasien p) {
-        String sql = "INSERT INTO pasien (nama, umur, gender, no_hp, alamat, gula_darah, tekanan_darah) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO pasien (nama, tanggal_lahir, gender, no_hp, alamat, gula_darah, tekanan_darah) VALUES (?,?,?,?,?,?,?)";
         try (Connection conn = DBConnection.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, p.getNama());
-            ps.setInt(2, p.getUmur());
+            ps.setDate(2, p.getTanggalLahir() != null ? java.sql.Date.valueOf(p.getTanggalLahir()) : null);
             ps.setString(3, p.getGender());
             ps.setString(4, p.getNoHP());
             ps.setString(5, p.getAlamat());
@@ -88,11 +88,11 @@ public class PasienDAO {
 
     // 4. Update Data
     public boolean update(Pasien p) {
-        String sql = "UPDATE pasien SET nama=?, umur=?, gender=?, no_hp=?, alamat=?, gula_darah=?, tekanan_darah=? WHERE id=?";
+        String sql = "UPDATE pasien SET nama=?, tanggal_lahir=?, gender=?, no_hp=?, alamat=?, gula_darah=?, tekanan_darah=? WHERE id=?";
         try (Connection conn = DBConnection.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, p.getNama());
-            ps.setInt(2, p.getUmur());
+            ps.setDate(2, p.getTanggalLahir() != null ? java.sql.Date.valueOf(p.getTanggalLahir()) : null);
             ps.setString(3, p.getGender());
             ps.setString(4, p.getNoHP());
             ps.setString(5, p.getAlamat());

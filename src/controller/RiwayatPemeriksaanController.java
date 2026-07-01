@@ -26,11 +26,9 @@ public class RiwayatPemeriksaanController implements Initializable {
 
     private PemeriksaanService service = new PemeriksaanService();
     private ObservableList<Pemeriksaan> list = FXCollections.observableArrayList();
-    private List<Pemeriksaan> allFilteredData = new ArrayList<>();
     
-    private final int DATA_PER_PAGE = 50;
+    private final int PAGE_SIZE = 50;
     private int currentPage = 1;
-    private int totalPages = 1;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -44,64 +42,57 @@ public class RiwayatPemeriksaanController implements Initializable {
         colTB.setCellValueFactory(new PropertyValueFactory<>("tinggiBadan"));
         colCatatan.setCellValueFactory(new PropertyValueFactory<>("catatan"));
         
-        txtCari.textProperty().addListener((obs, oldVal, newVal) -> filterData());
-        dpTanggal.valueProperty().addListener((obs, oldVal, newVal) -> filterData());
+        txtCari.textProperty().addListener((obs, oldVal, newVal) -> {
+            currentPage = 1;
+            loadData();
+        });
+        dpTanggal.valueProperty().addListener((obs, oldVal, newVal) -> {
+            currentPage = 1;
+            loadData();
+        });
         loadData();
     }
-
-    private void filterData() {
-        allFilteredData.clear();
-        String keyword = txtCari.getText() != null ? txtCari.getText().toLowerCase() : "";
-        LocalDate date = dpTanggal.getValue();
-        
-        for (Pemeriksaan p : service.getAll()) {
-            boolean matchName = p.getPasien() != null && p.getPasien().getNama().toLowerCase().contains(keyword);
-            boolean matchDate = (date == null) || (p.getTanggalPeriksa() != null && p.getTanggalPeriksa().equals(date));
-            
-            if (matchName && matchDate) {
-                allFilteredData.add(p);
-            }
-        }
-        
-        totalPages = (int) Math.ceil((double) allFilteredData.size() / DATA_PER_PAGE);
-        if (totalPages == 0) totalPages = 1;
-        currentPage = 1;
-        
-        updateTablePage();
-    }
     
-    private void updateTablePage() {
-        lblHalaman.setText("Halaman " + currentPage + " / " + totalPages);
-        
-        boolean showPrev = currentPage > 1;
-        btnPrev.setVisible(showPrev);
-        btnPrev.setManaged(showPrev);
-        
-        boolean showNext = currentPage < totalPages;
-        btnNext.setVisible(showNext);
-        btnNext.setManaged(showNext);
-        
-        int fromIndex = (currentPage - 1) * DATA_PER_PAGE;
-        int toIndex = Math.min(fromIndex + DATA_PER_PAGE, allFilteredData.size());
+    @FXML public void loadData() {
+        String keyword = txtCari != null ? txtCari.getText() : "";
+        LocalDate date = dpTanggal != null ? dpTanggal.getValue() : null;
+        int offset = (currentPage - 1) * PAGE_SIZE;
         
         list.clear();
-        if (fromIndex < allFilteredData.size()) {
-            list.addAll(allFilteredData.subList(fromIndex, toIndex));
-        }
+        list.addAll(service.getAllPaginated(PAGE_SIZE, offset, keyword, date));
         tableRiwayat.setItems(list);
+        
+        int totalData = service.getTotal(keyword, date);
+        int totalPages = (int) Math.ceil((double) totalData / PAGE_SIZE);
+        if (totalPages == 0) totalPages = 1;
+        
+        if (lblHalaman != null) {
+            lblHalaman.setText("Halaman " + currentPage + " / " + totalPages);
+            boolean showPrev = currentPage > 1;
+            btnPrev.setVisible(showPrev);
+            btnPrev.setManaged(showPrev);
+            
+            boolean showNext = currentPage < totalPages;
+            btnNext.setVisible(showNext);
+            btnNext.setManaged(showNext);
+        }
     }
     
     @FXML public void handlePrevPage() {
         if (currentPage > 1) {
             currentPage--;
-            updateTablePage();
+            loadData();
         }
     }
     
     @FXML public void handleNextPage() {
+        String keyword = txtCari != null ? txtCari.getText() : "";
+        LocalDate date = dpTanggal != null ? dpTanggal.getValue() : null;
+        int totalData = service.getTotal(keyword, date);
+        int totalPages = (int) Math.ceil((double) totalData / PAGE_SIZE);
         if (currentPage < totalPages) {
             currentPage++;
-            updateTablePage();
+            loadData();
         }
     }
     
@@ -109,8 +100,6 @@ public class RiwayatPemeriksaanController implements Initializable {
         txtCari.clear();
         dpTanggal.setValue(null);
     }
-    
-    @FXML public void loadData() { filterData(); }
 
     @FXML public void handleBack() {
         SceneUtil.switchScene((Stage) tableRiwayat.getScene().getWindow(), "/view/dashboard.fxml");

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2026 at 12:10 PM
+-- Generation Time: Jul 01, 2026 at 04:24 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,7 +44,8 @@ CREATE TABLE `dokter` (
 INSERT INTO `dokter` (`id`, `nama`, `spesialisasi`, `no_hp`, `alamat`, `email`, `poli_id`) VALUES
 (1, 'Dr. Andi', 'Umum', '08123456701', 'Jl. Kesehatan No. 1', 'andi@clinic.com', NULL),
 (2, 'Dr. Rina', 'Anak', '08123456702', 'Jl. Kesehatan No. 2', 'rina@clinic.com', NULL),
-(3, 'Dr. Agung', 'Poli Gigi', '0518168458', NULL, 'agung@clinic.com', NULL);
+(3, 'Dr. Agung', 'Poli Gigi', '0518168458', NULL, 'agung@clinic.com', NULL),
+(4, 'Dr. Eko', 'poli Jantung', '083847194448', NULL, 'Eko@clinic.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -79,23 +80,27 @@ INSERT INTO `obat` (`id`, `nama_obat`, `jenis`, `dosis`, `stok`, `harga`, `keter
 CREATE TABLE `pasien` (
   `id` int(11) NOT NULL,
   `nama` varchar(100) DEFAULT NULL,
-  `umur` int(11) DEFAULT NULL,
   `gender` varchar(20) DEFAULT NULL,
   `no_hp` varchar(20) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
   `gula_darah` double DEFAULT NULL,
-  `tekanan_darah` double DEFAULT NULL
+  `tekanan_darah` double DEFAULT NULL,
+  `tanggal_lahir` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `pasien`
 --
 
-INSERT INTO `pasien` (`id`, `nama`, `umur`, `gender`, `no_hp`, `alamat`, `gula_darah`, `tekanan_darah`) VALUES
-(1, 'Ahmad', 23, 'Laki-laki', '08123456789', 'Jl. Merdeka No. 1', 90, 120),
-(2, 'Siti', 20, 'Perempuan', '08123456790', 'Jl. Sudirman No. 2', 85, 110),
-(3, 'Budi', 30, 'Laki-laki', '08123456791', 'Jl. Ahmad Yani No. 3', 95, 125),
-(4, 'Agung', 50, 'Laki-laki', '023164985246', 'Banyumanik', 200, 250);
+INSERT INTO `pasien` (`id`, `nama`, `gender`, `no_hp`, `alamat`, `gula_darah`, `tekanan_darah`, `tanggal_lahir`) VALUES
+(1, 'Ahmad', 'Laki-laki', '08123456789', 'Jl. Merdeka No. 1', 90, 120, '2003-07-01'),
+(2, 'Siti', 'Perempuan', '08123456790', 'Jl. Sudirman No. 2', 85, 110, '2006-07-01'),
+(3, 'Budi', 'Laki-laki', '08123456791', 'Jl. Ahmad Yani No. 3', 95, 125, '1996-07-01'),
+(4, 'Agung', 'Laki-laki', '023164985246', 'Banyumanik', 200, 250, '1976-07-01'),
+(5, 'Agus', 'Laki-laki', '082198736542', 'semarang', 120, 90, '2002-07-01'),
+(6, 'santi', 'Perempuan', '089726638721', 'kaligawe', 130, 100, '1994-07-01'),
+(7, 'Rita', 'Perempuan', '089543958475', 'Kendal', 125, 90, '1991-07-01'),
+(8, 'Rino', 'Perempuan', '085374839275', 'Desa Dawung', 122, 89, '2003-07-08');
 
 -- --------------------------------------------------------
 
@@ -121,7 +126,9 @@ CREATE TABLE `pemeriksaan` (
 
 INSERT INTO `pemeriksaan` (`id`, `pasien_id`, `dokter_id`, `tanggal_periksa`, `tekanan_darah`, `suhu_tubuh`, `berat_badan`, `tinggi_badan`, `catatan`) VALUES
 (1, 2, 2, '2026-06-30', '120/80', 36.5, 65, 170, 'jangan makanan yang mengandung minyak kotor'),
-(2, 4, 1, '2026-06-30', '200/200', 34, 80, 170, 'ada alergi obat');
+(2, 4, 1, '2026-06-30', '200/200', 34, 80, 170, 'ada alergi obat'),
+(3, 5, 3, '2026-06-30', '120', 40, 56, 190, 'ngomongnya tipes malah masuk poli gigi'),
+(4, 6, 2, '2026-06-30', '130', 30, 60, 158, 'sakit');
 
 -- --------------------------------------------------------
 
@@ -145,7 +152,10 @@ CREATE TABLE `pendaftaran` (
 
 INSERT INTO `pendaftaran` (`id`, `pasien_id`, `dokter_id`, `tanggal_daftar`, `waktu_daftar`, `keluhan`, `status`) VALUES
 (1, 1, 1, '2026-06-30', '09:45:00', 'tenggorokan sakit', 'Menunggu'),
-(2, 4, 1, '2026-06-30', '16:41:00', 'ketika menelan tenggorokan terasa sakit', 'Selesai');
+(2, 4, 1, '2026-06-30', '16:41:00', 'ketika menelan tenggorokan terasa sakit', 'Selesai'),
+(3, 5, 3, '2026-06-30', '17:33:00', 'tipes', 'Diperiksa'),
+(4, 2, 1, '2026-06-30', '17:46:00', 'sakit', 'Menunggu'),
+(5, 7, 4, '2026-07-01', '07:12:00', 'ssesak nafas sudah 2 hari', 'Menunggu');
 
 -- --------------------------------------------------------
 
@@ -191,7 +201,8 @@ CREATE TABLE `poli` (
 INSERT INTO `poli` (`id`, `nama_poli`, `keterangan`) VALUES
 (1, 'Poli Umum', 'Pelayanan kesehatan umum'),
 (2, 'Poli Anak', 'Pelayanan kesehatan anak'),
-(3, 'Poli Gigi', 'Pelayanan kesehatan gigi dan mulut');
+(3, 'Poli Gigi', 'Pelayanan kesehatan gigi dan mulut'),
+(4, 'poli Jantung', 'Pelayanan kesehatan jantung');
 
 -- --------------------------------------------------------
 
@@ -220,7 +231,12 @@ CREATE TABLE `prediksi` (
 
 INSERT INTO `prediksi` (`id`, `pasien_id`, `pregnancies`, `glucose`, `blood_pressure`, `skin_thickness`, `insulin`, `bmi`, `pedigree`, `age`, `hasil`, `tanggal_prediksi`) VALUES
 (1, 1, 0, 90, 120, 32, 23, 90, 45, 23, 'RISIKO DIABETES RENDAH', '2026-06-30'),
-(2, 4, 0, 200, 250, 34, 50, 80, 55, 50, 'RISIKO DIABETES TINGGI', '2026-06-30');
+(2, 4, 0, 200, 250, 34, 50, 80, 55, 50, 'RISIKO DIABETES TINGGI', '2026-06-30'),
+(3, 1, 0, 90, 120, 32, 23, 90, 45, 23, 'RISIKO DIABETES RENDAH', '2026-06-30'),
+(4, 6, 1, 130, 100, 32, 21, 43, 21, 32, 'RISIKO DIABETES RENDAH', '2026-06-30'),
+(5, 6, 1, 130, 100, 32, 21, 43, 21, 32, 'RISIKO DIABETES RENDAH', '2026-06-30'),
+(6, 6, 1, 99999, 100, 32, 21, 43, 21, 32, 'RISIKO DIABETES RENDAH', '2026-06-30'),
+(7, 6, 1, 200, 100, 32, 21, 150, 21, 100, 'RISIKO DIABETES TINGGI', '2026-06-30');
 
 -- --------------------------------------------------------
 
@@ -245,7 +261,8 @@ CREATE TABLE `rekam_medis` (
 
 INSERT INTO `rekam_medis` (`id`, `pendaftaran_id`, `pasien_id`, `dokter_id`, `tanggal_periksa`, `diagnosis`, `tindakan`, `catatan`) VALUES
 (1, 1, 1, 1, '2026-06-30', 'flu	', 'pemberian obat paracetamol', 'rawat jalan'),
-(2, 2, 4, 1, '2026-06-30', 'radang tenggorokan', 'konsumsi obat pereda nyeri dan minum hangat', 'rawat jalan');
+(2, 2, 4, 1, '2026-06-30', 'radang tenggorokan', 'konsumsi obat pereda nyeri dan minum hangat', 'rawat jalan'),
+(3, 4, 2, 1, '2026-06-30', 'sakit', 'periksa', 'butuh obat');
 
 -- --------------------------------------------------------
 
@@ -318,7 +335,8 @@ ALTER TABLE `petugas`
 -- Indexes for table `poli`
 --
 ALTER TABLE `poli`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nama_poli` (`nama_poli`);
 
 --
 -- Indexes for table `prediksi`
@@ -352,7 +370,7 @@ ALTER TABLE `resep_obat`
 -- AUTO_INCREMENT for table `dokter`
 --
 ALTER TABLE `dokter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `obat`
@@ -364,19 +382,19 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT for table `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pemeriksaan`
 --
 ALTER TABLE `pemeriksaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `petugas`
@@ -388,19 +406,19 @@ ALTER TABLE `petugas`
 -- AUTO_INCREMENT for table `poli`
 --
 ALTER TABLE `poli`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `prediksi`
 --
 ALTER TABLE `prediksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `rekam_medis`
 --
 ALTER TABLE `rekam_medis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `resep_obat`

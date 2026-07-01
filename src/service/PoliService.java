@@ -12,4 +12,5 @@ public class PoliService {
     public boolean save(Poli p) { return (p.getIdPoli() == 0) ? dao.insert(p) : dao.update(p); }
     public boolean delete(int id) { return dao.delete(id); }
     public int getTotal() { return dao.getTotal(); }
+    public boolean isNamaPoliExists(String namaPoli, int excludeId) { return dao.isNamaPoliExists(namaPoli, excludeId); }
 }

@@ -20,6 +20,8 @@ import util.SceneUtil;
 import controller.DashboardController;
 
 public class PoliController implements Initializable {
+    @FXML private javafx.scene.layout.HBox hboxTombol;
+    @FXML private javafx.scene.control.Button btnTambah, btnEdit, btnHapus;
     @FXML private TableView<Poli> tablePoli;
     @FXML private TableColumn<Poli, Integer> colId;
     @FXML private TableColumn<Poli, String> colNama, colKeterangan;

@@ -15,4 +15,6 @@ public class PemeriksaanService {
         return result;
     }
     public boolean delete(int id) { return dao.delete(id); }
+    public List<Pemeriksaan> getAllPaginated(int limit, int offset, String keyword, java.time.LocalDate date) { return dao.getAllPaginated(limit, offset, keyword, date); }
+    public int getTotal(String keyword, java.time.LocalDate date) { return dao.getTotal(keyword, date); }
 }

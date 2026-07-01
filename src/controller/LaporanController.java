@@ -49,7 +49,7 @@ public class LaporanController implements Initializable {
     private void setupBarChartTotal() {
         barChartTotal.setTitle("Total Data Per Modul");
         
-        // ❌ HAPUS: barChartTotal.setXAxis(...) dan barChartTotal.setYAxis(...)
+        // HAPUS: barChartTotal.setXAxis(...) dan barChartTotal.setYAxis(...)
         // Axis sudah di-set dari FXML, cukup ambil dan set labelnya saja
         
         CategoryAxis xAxis = (CategoryAxis) barChartTotal.getXAxis();
@@ -113,7 +113,7 @@ public class LaporanController implements Initializable {
     private void setupBarChartPendaftaran() {
         barChartPendaftaran.setTitle("Status Pendaftaran");
         
-        // ❌ HAPUS: barChartPendaftaran.setXAxis(...) dan barChartPendaftaran.setYAxis(...)
+        // HAPUS: barChartPendaftaran.setXAxis(...) dan barChartPendaftaran.setYAxis(...)
         // Axis sudah di-set dari FXML
         
         CategoryAxis xAxis = (CategoryAxis) barChartPendaftaran.getXAxis();

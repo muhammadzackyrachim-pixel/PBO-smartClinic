@@ -15,27 +15,24 @@
                    alignment="CENTER"/>
 
             <!-- TOOLBAR DENGAN TOMBOL BERTEKS -->
-<HBox spacing="10" alignment="CENTER">
-    <Button text="➕ Tambah"
+<HBox fx:id="hboxTombol" spacing="10" alignment="CENTER">
+    <Button fx:id="btnTambah" text="➕ Tambah"
             onAction="#handleTambah"
             styleClass="btn-tambah"/>
     
-    <Button text="✏️ Edit"
+    <Button fx:id="btnEdit" text="✏️ Edit"
             onAction="#handleEdit"
             styleClass="btn-edit"/>
     
-    <Button text="🗑️ Hapus"
+    <Button fx:id="btnHapus" text="🗑️ Hapus"
             onAction="#handleHapus"
             styleClass="btn-hapus"/>
     
     
     <TextField fx:id="txtCari"
                promptText="Cari pasien..."
+               HBox.hgrow="ALWAYS"
                prefWidth="200"/>
-    
-    <Button text="🔍 Cari"
-            onAction="#handleCari"
-            styleClass="btn-cari"/>
     
 </HBox>
         </VBox>
@@ -55,6 +52,7 @@
                 <columns>
                     <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
                     <TableColumn fx:id="colNama" text="Nama" prefWidth="150"/>
+                    <TableColumn fx:id="colTanggalLahir" text="Tanggal Lahir" prefWidth="120"/>
                     <TableColumn fx:id="colUmur" text="Umur" prefWidth="80"/>
                     <TableColumn fx:id="colGender" text="Gender" prefWidth="100"/>
                     <TableColumn fx:id="colAlamat" text="Alamat" prefWidth="200"/>

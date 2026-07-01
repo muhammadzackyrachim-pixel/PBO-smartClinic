@@ -5,9 +5,9 @@
 <top>
     <VBox spacing="10" styleClass="top-panel">
         <Label text="PEMERIKSAAN DOKTER (TANDA VITAL)" styleClass="title" maxWidth="Infinity" alignment="CENTER"/>
-        <HBox spacing="10" alignment="CENTER">
-            <Button text="➕ Tambah Periksa" onAction="#handleTambah" styleClass="btn-tambah"/>
-            <Button text="🗑️ Hapus" onAction="#handleHapus" styleClass="btn-hapus"/>
+        <HBox fx:id="hboxTombol" spacing="10" alignment="CENTER">
+            <Button fx:id="btnTambah" text="➕ Tambah Periksa" onAction="#handleTambah" styleClass="btn-tambah"/>
+            <Button fx:id="btnHapus" text="🗑️ Hapus" onAction="#handleHapus" styleClass="btn-hapus"/>
         </HBox>
     </VBox>
 </top>
